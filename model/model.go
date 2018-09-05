@@ -3,10 +3,10 @@ package model
 import (
 	"database/sql"
 	"fmt"
-	"helpers"
+	"github.com/irellik/gblog/helpers"
+	"github.com/irellik/gblog/service"
 	"html/template"
 	"log"
-	"service"
 	"time"
 )
 

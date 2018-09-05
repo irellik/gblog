@@ -2,10 +2,9 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"helpers"
-	"model"
-	"net/http"
-	"service"
+	"github.com/irellik/gblog/helpers"
+	"github.com/irellik/gblog/model"
+	"github.com/irellik/gblog/service"
 )
 
 // 首页

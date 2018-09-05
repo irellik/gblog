@@ -1,14 +1,14 @@
 package main
 
 import (
-	"controller"
 	"github.com/gin-gonic/gin"
-	"helpers"
+	"github.com/irellik/gblog/controller"
+	"github.com/irellik/gblog/helpers"
+	"github.com/irellik/gblog/service"
 	"html/template"
 	"log"
 	"os"
 	"path/filepath"
-	"service"
 	"strings"
 )
 

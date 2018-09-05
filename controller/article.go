@@ -3,11 +3,11 @@ package controller
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"helpers"
+	"github.com/irellik/gblog/helpers"
+	"github.com/irellik/gblog/model"
+	"github.com/irellik/gblog/service"
 	"html/template"
-	"model"
 	"net/http"
-	"service"
 	"strconv"
 )
 
