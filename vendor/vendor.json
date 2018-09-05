@@ -33,10 +33,40 @@
 			"revisionTime": "2018-08-31T20:38:16Z"
 		},
 		{
+			"checksumSHA1": "k9izYoyobR8Upb3Yjsw9htgE/Mk=",
+			"path": "github.com/go-sql-driver/mysql",
+			"revision": "99ff426eb706cffe92ff3d058e168b278cabf7c7",
+			"revisionTime": "2018-07-19T07:19:42Z"
+		},
+		{
 			"checksumSHA1": "CbzNfOvaT1G3G9WILmsyjYfYTO0=",
 			"path": "github.com/golang/protobuf/proto",
 			"revision": "b27b920f9e71b439b873b17bf99f56467623814a",
 			"revisionTime": "2018-08-21T05:17:52Z"
+		},
+		{
+			"checksumSHA1": "ZmiRc+ofnNUCiEXVYlVm2n1fjSo=",
+			"path": "github.com/irellik/gblog/controller",
+			"revision": "2fe2fdbc548f5617170572d668c267715088f1bf",
+			"revisionTime": "2018-09-05T08:28:05Z"
+		},
+		{
+			"checksumSHA1": "pnWWn59XP5Xf1VbUJdAtfMpreBQ=",
+			"path": "github.com/irellik/gblog/helpers",
+			"revision": "2fe2fdbc548f5617170572d668c267715088f1bf",
+			"revisionTime": "2018-09-05T08:28:05Z"
+		},
+		{
+			"checksumSHA1": "6E9uzgcY/d6Lx9F1peK+flM05W4=",
+			"path": "github.com/irellik/gblog/model",
+			"revision": "2fe2fdbc548f5617170572d668c267715088f1bf",
+			"revisionTime": "2018-09-05T08:28:05Z"
+		},
+		{
+			"checksumSHA1": "dq0OoPGrOMFzANaHYy+Ij0UDHJI=",
+			"path": "github.com/irellik/gblog/service",
+			"revision": "2fe2fdbc548f5617170572d668c267715088f1bf",
+			"revisionTime": "2018-09-05T08:28:05Z"
 		},
 		{
 			"checksumSHA1": "GiVgQkx5acnq+JZtYiuHPlhHoso=",
