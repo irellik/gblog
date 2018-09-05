@@ -1,0 +1,12 @@
+{{ define "include/body.html" }}
+<script type="text/javascript">
+    $(function () {
+        $("#posts").find('img').lazyload({
+            placeholder: "/static/image/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>
+{{ end }}

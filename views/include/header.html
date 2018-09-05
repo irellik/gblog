@@ -1,0 +1,50 @@
+{{define "include/header.html"}}
+<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="header-inner"><h1 class="site-meta">
+        <span class="logo-line-before"><i></i></span>
+        <a href="/" class="brand" rel="start">
+              <span class="logo">
+                <i class="icon-next-logo"></i>
+            </span>
+            <span class="site-title">{{ index .settings "name" }}</span>
+        </a>
+        <span class="logo-line-after"><i></i></span>
+    </h1>
+
+        <div class="site-nav-toggle">
+            <button>
+                <span class="btn-bar"></span>
+                <span class="btn-bar"></span>
+                <span class="btn-bar"></span>
+            </button>
+        </div>
+
+        <nav class="site-nav">    <ul id="menu" class="menu menu-left">
+            <li class="menu-item menu-item-home">
+                <a href="/" rel="section">
+                    <i class="menu-item-icon"></i> <br />
+                    首页
+                </a>
+            </li>
+            <li class="menu-item menu-item-home">
+                <a href="/category" rel="section">分类</a>
+            </li>
+            <li class="menu-item menu-item-home">
+                <a href="/archive" rel="section">归档</a>
+            </li>
+            <li class="menu-item menu-item-home">
+                <a href="/tag" rel="section">标签</a>
+            </li>
+        </ul>
+
+            <div class="site-search">
+
+                <form class="site-search-form">
+                    <input type="text" id="st-search-input" name="s" class="st-search-input st-default-search-input" autocomplete="off" autocorrect="off" autocapitalize="off" value=""/>
+                </form>
+
+            </div>
+        </nav>
+    </div>
+</header>
+        {{end}}

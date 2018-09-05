@@ -1,0 +1,103 @@
+{{ define "index/article.html" }}
+{{ template "include/head_1.html" }}
+{{ template "include/head_2.html" .settings }}
+<div class="container one-column page-post-detail">
+
+    <!--page home-->
+    <div class="headband"></div>
+{{template "include/header.html" .}}
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+
+                <section id="posts" class="posts-expand">
+
+                    <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+                        <header class="post-header">
+
+                            <h1 class="post-title" itemprop="name headline">
+                            {{.post.Title}}                 </h1>
+
+                            <div class="post-meta">
+                     <span class="post-time">
+                        发表于
+                        <time datetime="{{ toDate .post.PublishedAt }}" itemprop="datePublished">{{ toDate .post.PublishedAt }}</time>
+                    </span>
+
+
+                                <span class="post-category" >
+                      &nbsp; | &nbsp; 分类于
+
+                      <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                       <a href="/category/{{ .post.CEnName }}">{{ .post.CName }}</a>                   </span>
+
+
+               </span>
+
+                                <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                                <a rel="nofollow" href="https://blog.izgq.net/archives/668/#comments">{{ .post.CommentCount }} 条评论</a>
+                       </span>
+                                <span class="post-comments-count">
+                &nbsp;
+                                </span>
+                            </div>
+
+                        </header>
+
+                        <div class="post-body">
+
+
+    <span itemprop="articleBody">
+        {{.post.ContentHtml}}
+    </span>
+
+                        </div>
+
+                        <footer class="post-footer">
+
+                            <div class="post-tags">
+                                {{range $_,$tag := .post.Tags}}
+                                <a href="/tag/{{$tag.Name}}">{{$tag.Name}}</a>
+                                        {{end}}
+                            </div>
+                        </footer>
+                    </article>
+
+                </section>
+
+                <div id="disqus_thread"></div>
+                <script>
+
+                    /**
+                     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+                    /*
+                    var disqus_config = function () {
+                    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+                    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                    };
+                    */
+                    (function() { // DON'T EDIT BELOW THIS LINE
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://iwww.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </div>
+
+    {{template "include/sidebar_post.html" .}}
+    </main>
+
+{{ template "include/footer.html" .}}
+    <div class="back-to-top"></div>
+</div>
+{{ template "include/js.html" }}
+
+<script type="text/javascript" src="https://og8dz06d9.qnssl.com/usr/themes/next/js/bootstrap.scrollspy.js?v=0.4.5.2"></script>
+<script type="text/javascript" src="https://og8dz06d9.qnssl.com/usr/themes/next/js/post_sidebar.js?v=0.4.5.2"></script>
+{{ template "include/body.html" }}
+{{ end }}

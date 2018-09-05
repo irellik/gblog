@@ -1,0 +1,16 @@
+{{ define "include/head_2.html" }}
+<script type="text/javascript" id="hexo.configuration">
+    var CONFIG = {
+        scheme: 'Mist',
+        motion: true,
+        sidebar: false
+    };
+</script>
+<title>{{ index . "name" }}</title>
+
+<meta name="description" content="{{ index . "description" }}" />
+<meta name="keywords" content="{{ index . "keywords" }}" />
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+{{ end }}

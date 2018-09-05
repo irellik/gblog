@@ -1,0 +1,27 @@
+{{define "include/footer.html"}}
+<footer id="footer" class="footer">
+    <div class="footer-inner">
+        <div class="copyright" >
+            &copy;
+            <span itemprop="copyrightYear">2018</span>
+            <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+            <span class="author" itemprop="copyrightHolder"><a href="https://iwww.me/">{{index .settings "name"}}</a></span>
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank" style="display: inline-block; vertical-align: middle; margin-left: 10px;">
+                <img src="https://og8dz06d9.qnssl.com/usr/themes/next/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+        </div>
+
+        <div class="powered-by">
+            由 <a class="theme-link" href="https://github.com/gin-gonic/gin" target="_blank">gin</a> 强力驱动</div>
+
+        <div class="theme-info">
+            主题移植自 -
+            <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+                hexo-theme-next
+            </a>
+        </div>
+    </div>
+</footer>
+{{end}}

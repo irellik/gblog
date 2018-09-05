@@ -1,0 +1,53 @@
+{{ define "archive/index.html" }}
+{{ template "include/head_1.html" }}
+{{ template "include/head_2.html" .settings }}
+<div class="container one-column page-archive">
+    <!--page home-->
+    <div class="headband"></div>
+
+{{template "include/header.html" .}}
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                <section id="posts" class="posts-collapse">
+                    <span class="archive-move-on"></span>
+
+                    <span class="archive-page-counter">
+      {{.message}}
+    </span>
+                    {{range $year := .sortedKey}}
+                    <div class="collection-title">
+                        <h2 class="archive-year motion-element" id="archive-year-{{$year}}">{{ $year }}</h2>
+                    </div>
+                            {{range $_,$post := (index $.posts $year)}}
+                    <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                <a class="post-title-link" href="/{{$post.Id}}.html" itemprop="url">
+                                    <span itemprop="name">{{$post.Title}}</span>
+                                </a>
+                            </h1>
+                            <div class="post-meta">
+                                <time class="post-time" itemprop="dateCreated" datetime="{{$post.PublishedAt}}" content="{{ timeFormat $post.PublishedAt "01-02"}}">
+                                {{ timeFormat $post.PublishedAt "01-02"}}
+                                </time>
+                            </div>
+                        </header>
+                    </article>
+                                    {{end}}
+                            {{end}}
+                </section>
+            </div>
+        </div>
+    {{template "include/sidebar.html" .}}
+
+    </main>
+{{ template "include/footer.html" .}}
+    <div class="back-to-top"></div>
+</div>
+{{ template "include/js.html" }}
+<script type="text/javascript" id="motion.page.archive">
+    $('.archive-year').velocity('transition.slideLeftIn');
+</script>
+{{ template "include/body.html" }}
+{{ end }}

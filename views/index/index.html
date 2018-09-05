@@ -1,0 +1,76 @@
+{{ define "index/index.html" }}
+{{ template "include/head_1.html" }}
+{{ template "include/head_2.html" .settings }}
+<div class="container one-column page-home">
+    <!--page home-->
+    <div class="headband"></div>
+    {{template "include/header.html" .}}
+    <main id="main" class="main">
+    <div class="main-inner">
+        <div id="content" class="content">
+
+            <section id="posts" class="posts-expand">
+{{if .message}}
+    <span>
+        {{$.message}}
+    </span>
+                {{end}}
+            {{ range $_, $post := .postList}}
+                <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+                    <header class="post-header">
+                        <h1 class="post-title" itemprop="name headline">
+                            <a class="post-title-link" href="/{{ $post.Id }}.html" itemprop="url">
+                            {{ $post.Title }}              </a>
+                        </h1>
+                        <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="{{ toDate $post.PublishedAt }}" content="{{ toDate $post.PublishedAt }}">
+          {{ toDate $post.PublishedAt }}          </time>
+        </span>
+                            <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/category/{{ $post.CEnName }}/">{{ $post.CName }}</a>              </span>
+       </span>
+                            <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                            <a rel="nofollow" href="/{{ $post.Id }}.html#disqus_thread">{{ $post.CommentCount }} 条评论</a>
+                     </span>
+                            <span class="post-comments-count">
+                &nbsp;
+       </span>
+                        </div>
+                    </header>
+
+                    <div class="post-body">
+                        <p>{{ $post.Abstract }}</p><p class="more"><a href="/{{ $post.Id }}.html" title="{{ $post.Title }}">阅读全文 »</a></p>
+                    </div>
+
+                    <footer class="post-footer">
+
+                        <div class="post-eof"></div>
+
+                    </footer>
+                </article>
+            {{ end }}
+            </section>
+            <nav class="pagination">
+                {{ range $_,$value := .pagination }}
+                        {{if eq (index $value "url") "" }}
+                            <span>{{index $value "page"}}</span>
+                        {{else}}
+                    <a href="{{index $value "url"}}" {{if eq (index $value "isCurrent") "yes" }} class="page-number current" {{end}}>{{index $value "page"}}</a>
+                    {{end}}
+                        {{ end }}
+
+    </div>
+{{template "include/sidebar.html" .}}
+</main>
+
+{{ template "include/footer.html" .}}
+    <div class="back-to-top"></div>
+</div>
+{{ template "include/js.html" }}
+{{ template "include/body.html" }}
+{{ end }}

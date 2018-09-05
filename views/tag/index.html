@@ -1,0 +1,38 @@
+{{ define "tag/index.html" }}
+{{ template "include/head_1.html" }}
+{{ template "include/head_2.html" .settings }}
+<div class="container one-column page-home">
+    <!--page home-->
+    <div class="headband"></div>
+{{template "include/header.html" .}}
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+
+                <div id="posts" class="posts-expand">
+                    <div class="tag-cloud">
+                        <div class="tag-cloud-title">
+                            目前共计 {{len .tags}} 个标签
+                            <div class="tag-cloud-tags">
+                                {{range $_,$tag := .tags}}
+                                <a href="/tag/{{$tag.Name}}" rel="tag" class="tag-size-{{$tag.WeightCss}}" title="{{$tag.PostCount}} 篇文章">
+                                {{$tag.Name}}                                        </a>
+                                        {{end}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    {{template "include/sidebar.html" .}}
+
+    </main>
+
+{{template "include/footer.html" .}}
+    <div class="back-to-top"></div>
+</div>
+{{ template "include/js.html" }}
+{{ template "include/body.html" }}
+{{ end }}

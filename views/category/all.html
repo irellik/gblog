@@ -1,0 +1,41 @@
+{{ define "category/all.html" }}
+{{ template "include/head_1.html" }}
+{{ template "include/head_2.html" .settings }}
+<div class="container one-column page-home">
+    <!--page home-->
+    <div class="headband"></div>
+{{template "include/header.html" .}}
+    <main id="main" class="main">
+        <div class="main-inner">
+        <div id="content" class="content">
+
+        <div id="posts" class="posts-collapse">
+            <div class="category-all-page">
+                <div class="category-all-title">
+                    目前共计 {{len .categories}} 个分类
+                </div>
+                <div class="category-all">
+                    <ul class="category-list">
+                        {{range $_,$category := .categories}}
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/{{$category.EnName}}/">{{$category.Name}}</a>
+                            <span class="category-list-count">{{$category.PostCount}}</span>
+                        </li>
+                        {{end}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+
+    {{template "include/sidebar.html" .}}
+
+    </main>
+
+{{template "include/footer.html" .}}
+    <div class="back-to-top"></div>
+</div>
+{{ template "include/js.html" }}
+{{ template "include/body.html" }}
+{{ end }}

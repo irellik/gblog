@@ -1,0 +1,9 @@
+mysql:
+  host: mysql
+  username: root
+  password: root
+  port: 3306
+  database: blog
+site:
+  pageSize: 10
+  address: :8080
