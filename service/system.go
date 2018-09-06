@@ -2,6 +2,7 @@ package service
 
 import (
 	"flag"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
@@ -31,7 +32,8 @@ var globalConfig = Config{}
 
 // 载入配置文件
 func LoadConfig() {
-
+	currentPath := GetCurrentPath()
+	fmt.Println(currentPath)
 	confFile := flag.String("c", "", "配置文件")
 	flag.Parse()
 	yamlFile, err := ioutil.ReadFile(*confFile)
