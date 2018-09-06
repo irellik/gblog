@@ -45,6 +45,12 @@
 			"revisionTime": "2018-08-21T05:17:52Z"
 		},
 		{
+			"checksumSHA1": "KwD83N7Pzvj+SHkoBv8eqI63oxU=",
+			"path": "github.com/irellik/gblog",
+			"revision": "cf787fb0eb3a9646a8379776eb3fe76577393300",
+			"revisionTime": "2018-09-06T00:54:51Z"
+		},
+		{
 			"checksumSHA1": "ZmiRc+ofnNUCiEXVYlVm2n1fjSo=",
 			"path": "github.com/irellik/gblog/controller",
 			"revision": "03b6c4cf75e8bc589a2992f17c652986d2f21f9b",
