@@ -33,8 +33,7 @@ var globalConfig = Config{}
 // 载入配置文件
 func LoadConfig() {
 	currentPath := GetCurrentPath()
-	fmt.Println(currentPath)
-	confFile := flag.String("c", "", "配置文件")
+	confFile := flag.String("c", fmt.Sprintf("%s/config/app.yaml", currentPath), "配置文件")
 	flag.Parse()
 	yamlFile, err := ioutil.ReadFile(*confFile)
 	if err != nil {
