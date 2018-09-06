@@ -47,26 +47,26 @@
 		{
 			"checksumSHA1": "ZmiRc+ofnNUCiEXVYlVm2n1fjSo=",
 			"path": "github.com/irellik/gblog/controller",
-			"revision": "2fe2fdbc548f5617170572d668c267715088f1bf",
-			"revisionTime": "2018-09-05T08:28:05Z"
+			"revision": "03b6c4cf75e8bc589a2992f17c652986d2f21f9b",
+			"revisionTime": "2018-09-06T00:10:40Z"
 		},
 		{
 			"checksumSHA1": "pnWWn59XP5Xf1VbUJdAtfMpreBQ=",
 			"path": "github.com/irellik/gblog/helpers",
-			"revision": "2fe2fdbc548f5617170572d668c267715088f1bf",
-			"revisionTime": "2018-09-05T08:28:05Z"
+			"revision": "03b6c4cf75e8bc589a2992f17c652986d2f21f9b",
+			"revisionTime": "2018-09-06T00:10:40Z"
 		},
 		{
 			"checksumSHA1": "6E9uzgcY/d6Lx9F1peK+flM05W4=",
 			"path": "github.com/irellik/gblog/model",
-			"revision": "2fe2fdbc548f5617170572d668c267715088f1bf",
-			"revisionTime": "2018-09-05T08:28:05Z"
+			"revision": "03b6c4cf75e8bc589a2992f17c652986d2f21f9b",
+			"revisionTime": "2018-09-06T00:10:40Z"
 		},
 		{
-			"checksumSHA1": "dq0OoPGrOMFzANaHYy+Ij0UDHJI=",
+			"checksumSHA1": "X6dERzwVjT9z6Wtij8N6jgeEUIY=",
 			"path": "github.com/irellik/gblog/service",
-			"revision": "2fe2fdbc548f5617170572d668c267715088f1bf",
-			"revisionTime": "2018-09-05T08:28:05Z"
+			"revision": "03b6c4cf75e8bc589a2992f17c652986d2f21f9b",
+			"revisionTime": "2018-09-06T00:10:40Z"
 		},
 		{
 			"checksumSHA1": "GiVgQkx5acnq+JZtYiuHPlhHoso=",
