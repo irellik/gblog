@@ -6,10 +6,7 @@ import (
 	"github.com/irellik/gblog/helpers"
 	"github.com/irellik/gblog/service"
 	"html/template"
-	"log"
-	"os"
 	"path/filepath"
-	"strings"
 )
 
 func main() {
@@ -51,13 +48,5 @@ func loadView(engine *gin.Engine) {
 		"intToString": helpers.IntToString,
 	}
 	engine.SetFuncMap(funcMap)
-	engine.LoadHTMLGlob(filepath.Join(getCurrentPath(), "./views/**/*"))
-}
-
-func getCurrentPath() string {
-	path, err := filepath.Abs(filepath.Dir(os.Args[0]))
-	if err != nil {
-		log.Fatalf("%s", err)
-	}
-	return strings.Replace(path, "\\", "/", -1)
+	engine.LoadHTMLGlob(filepath.Join(service.GetCurrentPath(), "./views/**/*"))
 }

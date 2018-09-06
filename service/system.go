@@ -6,7 +6,10 @@ import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
+	"os"
+	"path/filepath"
 	"strconv"
+	"strings"
 )
 
 // 定义配置文件yaml结构
@@ -28,6 +31,7 @@ var globalConfig = Config{}
 
 // 载入配置文件
 func LoadConfig() {
+
 	confFile := flag.String("c", "", "配置文件")
 	flag.Parse()
 	yamlFile, err := ioutil.ReadFile(*confFile)
@@ -53,4 +57,12 @@ func GetPage(c *gin.Context) int {
 		page = 1
 	}
 	return page
+}
+
+func GetCurrentPath() string {
+	path, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	if err != nil {
+		log.Fatalf("%s", err)
+	}
+	return strings.Replace(path, "\\", "/", -1)
 }
