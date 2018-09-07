@@ -45,12 +45,6 @@
 			"revisionTime": "2018-08-21T05:17:52Z"
 		},
 		{
-			"checksumSHA1": "TiiGbpbIeGx3r1OnrrrUjYmvOHg=",
-			"path": "github.com/irellik/gblog",
-			"revision": "37cf19df52cc84f2cb4e0794371e3bbc8bc45e32",
-			"revisionTime": "2018-09-07T01:03:50Z"
-		},
-		{
 			"checksumSHA1": "ZmiRc+ofnNUCiEXVYlVm2n1fjSo=",
 			"path": "github.com/irellik/gblog/controller",
 			"revision": "37cf19df52cc84f2cb4e0794371e3bbc8bc45e32",
@@ -81,7 +75,7 @@
 			"revisionTime": "2018-08-30T10:17:45Z"
 		},
 		{
-			"checksumSHA1": "r5mYMnU412QZoiUqOxq/mJLYc4M=",
+			"checksumSHA1": "blX+7nyMMUIGgxTR/B3YlfcrsJ8=",
 			"path": "github.com/ugorji/go/codec",
 			"revision": "e253f1f20942cb6dc505e504e8bbba4b7f434cb2",
 			"revisionTime": "2018-08-31T06:23:57Z"
