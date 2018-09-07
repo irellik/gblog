@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/irellik/gblog/helpers"
-	"github.com/irellik/gblog/service"
+	sl "github.com/irellik/gblog/service/local"
 	"html/template"
 	"log"
 	"strconv"
@@ -71,7 +71,7 @@ var postTagTable string = "post_tag"
 
 // 获取文章列表
 func GetPosts(category string, offset int, limit int, search bool) ([]Post, int) {
-	db := service.MysqlClient
+	db := sl.MysqlClient
 	rowsSql := fmt.Sprintf("select p.id,p.title,p.content,p.published_at,c.name,c.en_name,p.comments_count,p.abstract,p.content from %s as p left join %s as c on p.cat_id = c.id where p.status = 1 order by p.id desc limit %d,%d", postTable, categoryTable, offset, limit)
 	countSql := fmt.Sprintf("select count(*) as total from %s where status = 1", postTable)
 	var rows *sql.Rows
@@ -124,7 +124,7 @@ func GetPosts(category string, offset int, limit int, search bool) ([]Post, int)
 }
 
 func Archive(tag string, t string) (map[string][]Post, int) {
-	db := service.MysqlClient
+	db := sl.MysqlClient
 	var rows *sql.Rows
 	var err error
 	if tag != "" {
@@ -158,7 +158,7 @@ func Archive(tag string, t string) (map[string][]Post, int) {
 
 // 获取所有设置
 func GetSettings() map[string]string {
-	db := service.MysqlClient
+	db := sl.MysqlClient
 	rowsSql := fmt.Sprintf("select `key`,`value` from %s", settingTable)
 	rows, err := db.Query(rowsSql)
 	if err != nil {
@@ -176,7 +176,7 @@ func GetSettings() map[string]string {
 
 // 获取所有栏目
 func GetCategories() []Category {
-	db := service.MysqlClient
+	db := sl.MysqlClient
 	rowsSql := fmt.Sprintf("select `c`.`id`, `c`.`name`, `c`.`description`, `c`.`en_name`, `p`.`count` as post_count from `%s` as `c` left join (select cat_id,count(*) as count from `%s` where status = ? group by cat_id) as `p` on `c`.`id` = `p`.`cat_id` where `c`.status = 1 order by `c`.`id` asc;", categoryTable, postTable)
 	rows, err := db.Query(rowsSql, 1)
 	if err != nil {
@@ -194,7 +194,7 @@ func GetCategories() []Category {
 
 // 获取所有tag
 func GetTags() []Tag {
-	db := service.MysqlClient
+	db := sl.MysqlClient
 	rowsSql := fmt.Sprintf("select t.id,t.name,count(p.tag_id) as post_count from %s as t right join %s as p on t.id = p.tag_id group by p.tag_id, t.id,t.name order by post_count desc;", tagTable, postTagTable)
 	rows, err := db.Query(rowsSql)
 	if err != nil {
@@ -227,7 +227,7 @@ func GetTags() []Tag {
 
 // 获取所有友情链接
 func GetFriends() []Friends {
-	db := service.MysqlClient
+	db := sl.MysqlClient
 	rowsSql := fmt.Sprintf("select id,name,url from %s", friendsTable)
 	rows, err := db.Query(rowsSql)
 	if err != nil {
@@ -245,7 +245,7 @@ func GetFriends() []Friends {
 
 // 获取单篇文章
 func GetPost(id int) Post {
-	db := service.MysqlClient
+	db := sl.MysqlClient
 	rowsSql := fmt.Sprintf("select `t`.`name` as `tag_name`,`p`.`id`,`p`.`title`,`p`.`content`,`p`.`published_at`,`p`.`comments_count`,`c`.`name`,`c`.`en_name` from `%s` as `p` left join `%s` as `c` on `p`.`cat_id` = `c`.`id` left join `%s` as `pt` on `p`.`id` = `pt`.`post_id` left join `%s` as `t` on `t`.`id` = `pt`.`tag_id` where `p`.`id` = ?", postTable, categoryTable, postTagTable, tagTable)
 	rows, err := db.Query(rowsSql, id)
 	if err != nil {
@@ -265,7 +265,7 @@ func GetPost(id int) Post {
 
 // 获取所有文章的id
 func GetAllPostId() []string {
-	db := service.MysqlClient
+	db := sl.MysqlClient
 	rowsSql := fmt.Sprintf("select id from `%s` where status = 1", postTable)
 	rows, err := db.Query(rowsSql)
 	if err != nil {
@@ -316,7 +316,7 @@ func updateRows(table string, conditions []map[string]string, targets []map[stri
 	}
 	updateStr := strings.Join(updateList, ",")
 	rowsSql := fmt.Sprintf("update %s set %s where %s", table, updateStr, whereStr)
-	db := service.MysqlClient
+	db := sl.MysqlClient
 	stmt, _ := db.Prepare(rowsSql)
 	res, _ := stmt.Exec()
 	num, _ := res.RowsAffected()

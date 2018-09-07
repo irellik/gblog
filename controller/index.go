@@ -4,15 +4,15 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/irellik/gblog/helpers"
 	"github.com/irellik/gblog/model"
-	"github.com/irellik/gblog/service"
+	sl "github.com/irellik/gblog/service/local"
 	"net/http"
 )
 
 // 首页
 func Index(c *gin.Context) {
-	config := service.GetConfig()
+	config := sl.GetConfig()
 	// 获取页码
-	page := service.GetPage(c)
+	page := sl.GetPage(c)
 	offset := (page - 1) * config.Site.PageSize
 	postList, total := model.GetPosts("", offset, config.Site.PageSize, false)
 

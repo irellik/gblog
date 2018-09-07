@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/irellik/gblog/helpers"
 	"github.com/irellik/gblog/model"
-	"github.com/irellik/gblog/service"
+	sl "github.com/irellik/gblog/service/local"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -26,9 +26,9 @@ func Article(c *gin.Context) {
 		return
 	}
 	post.ContentHtml = template.HTML(post.Content)
-	config := service.GetConfig()
+	config := sl.GetConfig()
 	// 获取页码
-	page := service.GetPage(c)
+	page := sl.GetPage(c)
 	offset := (page - 1) * config.Site.PageSize
 	_, total := model.GetPosts("", offset, config.Site.PageSize, false)
 	c.HTML(http.StatusOK, "index/article.html", gin.H{
@@ -43,9 +43,9 @@ func Article(c *gin.Context) {
 
 // 搜索
 func Search(c *gin.Context) {
-	config := service.GetConfig()
+	config := sl.GetConfig()
 	// 获取页码
-	page := service.GetPage(c)
+	page := sl.GetPage(c)
 	offset := (page - 1) * config.Site.PageSize
 	postList, total := model.GetPosts(c.Param("keyword"), offset, config.Site.PageSize, true)
 	totalPage := total/config.Site.PageSize + 1

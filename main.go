@@ -5,21 +5,23 @@ import (
 	"github.com/irellik/gblog/controller"
 	"github.com/irellik/gblog/helpers"
 	"github.com/irellik/gblog/service"
+	sl "github.com/irellik/gblog/service/local"
+	st "github.com/irellik/gblog/service/third"
 	"html/template"
 	"path/filepath"
 )
 
 func main() {
 	// 加载全局配置
-	service.LoadConfig()
+	sl.LoadConfig()
 	globalConfig := service.GetConfig()
 	// 连接MySQL
-	service.MysqlInit()
+	sl.MysqlInit()
 	//var LayoutView = filepath.Join(getCurrentPath(), "./views/layout.html")
 	// Disable Console Color
 	// gin.DisableConsoleColor()
 	// 更新评论
-	go helpers.UpdateCommentCount()
+	go st.UpdateCommentCount()
 	// Creates a gin router with default middleware:
 	// logger and recovery (crash-free) middleware
 	router := gin.Default()
