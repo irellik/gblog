@@ -38,14 +38,15 @@ func Article(c *gin.Context) {
 		tagList = append(tagList, keywordStruct.Name)
 	}
 	c.HTML(http.StatusOK, "index/article.html", gin.H{
-		"settings":   settings,
-		"categories": model.GetCategories(),
-		"totalTag":   len(model.GetTags()),
-		"totalPost":  total,
-		"friends":    model.GetFriends(),
-		"post":       post,
-		"title":      post.Title + " - " + settings["name"],
-		"keywords":   strings.Join(tagList, ","),
+		"settings":    settings,
+		"categories":  model.GetCategories(),
+		"totalTag":    len(model.GetTags()),
+		"totalPost":   total,
+		"friends":     model.GetFriends(),
+		"post":        post,
+		"title":       post.Title + " - " + settings["name"],
+		"keywords":    strings.Join(tagList, ","),
+		"description": post.Abstract,
 	})
 }
 

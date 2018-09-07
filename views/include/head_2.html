@@ -8,7 +8,7 @@
 </script>
 <title>{{ if .title }}{{.title}}{{else}}{{index .settings "description"}}{{end}}{{ index . "name" }}</title>
 
-<meta name="description" content="{{ if .post.Abstract }}{{.post.Abstract}}{{else}}{{index .settings "description"}}{{end}}" />
+<meta name="description" content="{{ if .description }}{{.description}}{{else}}{{index .settings "description"}}{{end}}" />
 <meta name="keywords" content="{{ if .keywords }}{{.keywords}}{{else}}{{ index .settings "keywords" }}{{end}}" />
 </head>
 
