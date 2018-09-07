@@ -45,28 +45,46 @@
 			"revisionTime": "2018-08-21T05:17:52Z"
 		},
 		{
-			"checksumSHA1": "ZmiRc+ofnNUCiEXVYlVm2n1fjSo=",
+			"checksumSHA1": "QF9AoX+YYlcA5Ktu+NX6fTztN6Q=",
+			"path": "github.com/irellik/gblog",
+			"revision": "6ade815f79ffe0611ccff67754a6e0abd08ccb60",
+			"revisionTime": "2018-09-07T02:23:18Z"
+		},
+		{
+			"checksumSHA1": "KCwhkDowgJxfdFmSwMtWfwRB3ZE=",
 			"path": "github.com/irellik/gblog/controller",
-			"revision": "37cf19df52cc84f2cb4e0794371e3bbc8bc45e32",
-			"revisionTime": "2018-09-07T01:03:50Z"
+			"revision": "6ade815f79ffe0611ccff67754a6e0abd08ccb60",
+			"revisionTime": "2018-09-07T02:23:18Z"
 		},
 		{
 			"checksumSHA1": "cg4f4njDm2mqoZtLN+2kuJ/I5n4=",
 			"path": "github.com/irellik/gblog/helpers",
-			"revision": "37cf19df52cc84f2cb4e0794371e3bbc8bc45e32",
-			"revisionTime": "2018-09-07T01:03:50Z"
+			"revision": "6ade815f79ffe0611ccff67754a6e0abd08ccb60",
+			"revisionTime": "2018-09-07T02:23:18Z"
 		},
 		{
-			"checksumSHA1": "ar2swE/g9brGm6p5LTKiNj1Fgso=",
+			"checksumSHA1": "Mr2vtD+9nazzKGIcp8ahK82Vvn0=",
 			"path": "github.com/irellik/gblog/model",
-			"revision": "37cf19df52cc84f2cb4e0794371e3bbc8bc45e32",
-			"revisionTime": "2018-09-07T01:03:50Z"
+			"revision": "6ade815f79ffe0611ccff67754a6e0abd08ccb60",
+			"revisionTime": "2018-09-07T02:23:18Z"
 		},
 		{
-			"checksumSHA1": "fO0IRYMpy5pQid3VRPlZx4njwxk=",
+			"checksumSHA1": "duimFbkjcFDB3D0fuOWqm1pDRVI=",
 			"path": "github.com/irellik/gblog/service",
-			"revision": "37cf19df52cc84f2cb4e0794371e3bbc8bc45e32",
-			"revisionTime": "2018-09-07T01:03:50Z"
+			"revision": "6ade815f79ffe0611ccff67754a6e0abd08ccb60",
+			"revisionTime": "2018-09-07T02:23:18Z"
+		},
+		{
+			"checksumSHA1": "N7OHwgDjq/qlC1BKTR2FWCfnYNA=",
+			"path": "github.com/irellik/gblog/service/local",
+			"revision": "6ade815f79ffe0611ccff67754a6e0abd08ccb60",
+			"revisionTime": "2018-09-07T02:23:18Z"
+		},
+		{
+			"checksumSHA1": "z0NNa1aSD38ncKeRN0AVGoL2kxY=",
+			"path": "github.com/irellik/gblog/service/third",
+			"revision": "6ade815f79ffe0611ccff67754a6e0abd08ccb60",
+			"revisionTime": "2018-09-07T02:23:18Z"
 		},
 		{
 			"checksumSHA1": "GiVgQkx5acnq+JZtYiuHPlhHoso=",
@@ -75,7 +93,7 @@
 			"revisionTime": "2018-08-30T10:17:45Z"
 		},
 		{
-			"checksumSHA1": "blX+7nyMMUIGgxTR/B3YlfcrsJ8=",
+			"checksumSHA1": "r5mYMnU412QZoiUqOxq/mJLYc4M=",
 			"path": "github.com/ugorji/go/codec",
 			"revision": "e253f1f20942cb6dc505e504e8bbba4b7f434cb2",
 			"revisionTime": "2018-08-31T06:23:57Z"
