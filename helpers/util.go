@@ -10,6 +10,7 @@ func HttpGet(url string) (string, error) {
 	resp, err := http.Get(url)
 	if err != nil {
 		log.Println(err)
+		return "error", err
 	}
 
 	defer resp.Body.Close()
