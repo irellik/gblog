@@ -7,6 +7,8 @@ import (
 	"github.com/irellik/gblog/service"
 	"html/template"
 	"log"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -259,4 +261,64 @@ func GetPost(id int) Post {
 	}
 
 	return post
+}
+
+// 获取所有文章的id
+func GetAllPostId() []string {
+	db := service.MysqlClient
+	rowsSql := fmt.Sprintf("select id from `%s` where status = 1", postTable)
+	rows, err := db.Query(rowsSql)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	idList := make([]string, 0)
+	for rows.Next() {
+		var id string
+		rows.Scan(&id)
+		idList = append(idList, id)
+	}
+	return idList
+}
+
+// 更新评论数量
+func UpdateCommentCount(id int, count int) int64 {
+	condition := make([]map[string]string, 0)
+	condition = append(condition, map[string]string{
+		"column": "id",
+		"value":  strconv.Itoa(id),
+	})
+	target := make([]map[string]string, 0)
+	target = append(target, map[string]string{
+		"comments_count": strconv.Itoa(count),
+	})
+	rowsCount := updateRows(postTable, condition, target)
+	return rowsCount
+}
+
+// 更新
+func updateRows(table string, conditions []map[string]string, targets []map[string]string) int64 {
+	whereList := make([]string, 0)
+	for _, condition := range conditions {
+		var express string
+		if _, ok := condition["express"]; ok {
+			express = condition["express"]
+		} else {
+			express = "="
+		}
+		whereChild := fmt.Sprintf("%s %s %s", condition["column"], express, condition["value"])
+		whereList = append(whereList, whereChild)
+	}
+	whereStr := strings.Join(whereList, " and ")
+	var updateList []string
+	for _, target := range targets {
+		updateList = append(updateList, fmt.Sprintf("%s = %s", target["key"], target["value"]))
+	}
+	updateStr := strings.Join(updateList, ",")
+	rowsSql := fmt.Sprintf("update %s set %s where %s", table, updateStr, whereStr)
+	db := service.MysqlClient
+	stmt, _ := db.Prepare(rowsSql)
+	res, _ := stmt.Exec()
+	num, _ := res.RowsAffected()
+	return num
 }
