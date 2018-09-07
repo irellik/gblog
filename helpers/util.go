@@ -9,13 +9,13 @@ import (
 func HttpGet(url string) string {
 	resp, err := http.Get(url)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 	return string(body)
 }
