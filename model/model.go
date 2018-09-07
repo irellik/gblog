@@ -288,16 +288,15 @@ func UpdateCommentCount(id int, count int) int64 {
 		"column": "id",
 		"value":  strconv.Itoa(id),
 	})
-	target := make([]map[string]string, 0)
-	target = append(target, map[string]string{
+	target := map[string]string{
 		"comments_count": strconv.Itoa(count),
-	})
+	}
 	rowsCount := updateRows(postTable, condition, target)
 	return rowsCount
 }
 
 // 更新
-func updateRows(table string, conditions []map[string]string, targets []map[string]string) int64 {
+func updateRows(table string, conditions []map[string]string, targets map[string]string) int64 {
 	whereList := make([]string, 0)
 	for _, condition := range conditions {
 		var express string
@@ -311,8 +310,8 @@ func updateRows(table string, conditions []map[string]string, targets []map[stri
 	}
 	whereStr := strings.Join(whereList, " and ")
 	var updateList []string
-	for _, target := range targets {
-		updateList = append(updateList, fmt.Sprintf("%s = %s", target["key"], target["value"]))
+	for key, value := range targets {
+		updateList = append(updateList, fmt.Sprintf("%s = %s", key, value))
 	}
 	updateStr := strings.Join(updateList, ",")
 	rowsSql := fmt.Sprintf("update %s set %s where %s", table, updateStr, whereStr)
