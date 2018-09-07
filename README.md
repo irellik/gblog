@@ -1,4 +1,4 @@
-#gblog
+# gblog
 Golang写的博客，移植hexo的next主题
 
 ## 安装部署

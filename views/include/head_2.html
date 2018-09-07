@@ -6,10 +6,10 @@
         sidebar: false
     };
 </script>
-<title>{{ index . "name" }}</title>
+<title>{{ if .title }}{{.title}}{{else}}{{index .settings "description"}}{{end}}{{ index . "name" }}</title>
 
-<meta name="description" content="{{ index . "description" }}" />
-<meta name="keywords" content="{{ index . "keywords" }}" />
+<meta name="description" content="{{ if .post.Abstract }}{{.post.Abstract}}{{else}}{{index .settings "description"}}{{end}}" />
+<meta name="keywords" content="{{ if .keywords }}{{.keywords}}{{else}}{{ index .settings "keywords" }}{{end}}" />
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">

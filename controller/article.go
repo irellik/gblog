@@ -9,6 +9,7 @@ import (
 	"html/template"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 // 详情页
@@ -31,13 +32,20 @@ func Article(c *gin.Context) {
 	page := sl.GetPage(c)
 	offset := (page - 1) * config.Site.PageSize
 	_, total := model.GetPosts("", offset, config.Site.PageSize, false)
+	settings := model.GetSettings()
+	tagList := make([]string, 0)
+	for _, keywordStruct := range post.Tags {
+		tagList = append(tagList, keywordStruct.Name)
+	}
 	c.HTML(http.StatusOK, "index/article.html", gin.H{
-		"settings":   model.GetSettings(),
+		"settings":   settings,
 		"categories": model.GetCategories(),
 		"totalTag":   len(model.GetTags()),
 		"totalPost":  total,
 		"friends":    model.GetFriends(),
 		"post":       post,
+		"title":      post.Title + " - " + settings["name"],
+		"keywords":   strings.Join(tagList, ","),
 	})
 }
 
