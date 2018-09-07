@@ -246,7 +246,7 @@ func GetFriends() []Friends {
 // 获取单篇文章
 func GetPost(id int) Post {
 	db := sl.MysqlClient
-	rowsSql := fmt.Sprintf("select `t`.`name` as `tag_name`,`p`.`id`,`p`.`title`,`p`.`content`,`p`.`published_at`,`p`.`comments_count`,`c`.`name`,`c`.`en_name` from `%s` as `p` left join `%s` as `c` on `p`.`cat_id` = `c`.`id` left join `%s` as `pt` on `p`.`id` = `pt`.`post_id` left join `%s` as `t` on `t`.`id` = `pt`.`tag_id` where `p`.`id` = ?", postTable, categoryTable, postTagTable, tagTable)
+	rowsSql := fmt.Sprintf("select `t`.`name` as `tag_name`,`p`.`id`,`p`.`title`,`p`.`content`,`p`.`published_at`,`p`.`comments_count`,`c`.`name`,`c`.`en_name`,`p`.`Abstract` from `%s` as `p` left join `%s` as `c` on `p`.`cat_id` = `c`.`id` left join `%s` as `pt` on `p`.`id` = `pt`.`post_id` left join `%s` as `t` on `t`.`id` = `pt`.`tag_id` where `p`.`id` = ?", postTable, categoryTable, postTagTable, tagTable)
 	rows, err := db.Query(rowsSql, id)
 	if err != nil {
 		log.Fatal(err)
@@ -255,7 +255,15 @@ func GetPost(id int) Post {
 	post := Post{}
 	for rows.Next() {
 		var tag Tag
-		rows.Scan(&post.TagName, &post.Id, &post.Title, &post.Content, &post.PublishedAt, &post.CommentCount, &post.CName, &post.CEnName)
+		rows.Scan(&post.TagName, &post.Id, &post.Title, &post.Content, &post.PublishedAt, &post.CommentCount, &post.CName, &post.CEnName, &post.Abstract)
+		if post.Abstract == "" {
+			if len([]rune(post.Content)) > 250 {
+				post.Abstract = helpers.TrimHtmlTag(string([]rune(post.Content)[:250]))
+			} else {
+				post.Abstract = helpers.TrimHtmlTag(string([]rune(post.Content)))
+			}
+
+		}
 		tag.Name = post.TagName
 		post.Tags = append(post.Tags, tag)
 	}
