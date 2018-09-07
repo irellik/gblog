@@ -19,7 +19,7 @@ func main() {
 	// Disable Console Color
 	// gin.DisableConsoleColor()
 	// 更新评论
-	go service.UpdateCommentCount()
+	go helpers.UpdateCommentCount()
 	// Creates a gin router with default middleware:
 	// logger and recovery (crash-free) middleware
 	router := gin.Default()
