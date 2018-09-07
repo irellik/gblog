@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/irellik/gblog/controller"
 	"github.com/irellik/gblog/helpers"
-	"github.com/irellik/gblog/service"
 	sl "github.com/irellik/gblog/service/local"
 	st "github.com/irellik/gblog/service/third"
 	"html/template"
@@ -14,7 +13,7 @@ import (
 func main() {
 	// 加载全局配置
 	sl.LoadConfig()
-	globalConfig := service.GetConfig()
+	globalConfig := sl.GetConfig()
 	// 连接MySQL
 	sl.MysqlInit()
 	//var LayoutView = filepath.Join(getCurrentPath(), "./views/layout.html")
@@ -51,5 +50,5 @@ func loadView(engine *gin.Engine) {
 		"intToString": helpers.IntToString,
 	}
 	engine.SetFuncMap(funcMap)
-	engine.LoadHTMLGlob(filepath.Join(service.GetCurrentPath(), "./views/**/*"))
+	engine.LoadHTMLGlob(filepath.Join(sl.GetCurrentPath(), "./views/**/*"))
 }
