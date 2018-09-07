@@ -47,26 +47,26 @@
 		{
 			"checksumSHA1": "QF9AoX+YYlcA5Ktu+NX6fTztN6Q=",
 			"path": "github.com/irellik/gblog",
-			"revision": "1dc487c6bc0eb9ca8b4d1da2a62ad9cc5888c833",
-			"revisionTime": "2018-09-07T02:40:50Z"
+			"revision": "8f38b0f32e409614cbfc6b33cdcc51d8317f23f1",
+			"revisionTime": "2018-09-07T02:46:50Z"
 		},
 		{
 			"checksumSHA1": "KCwhkDowgJxfdFmSwMtWfwRB3ZE=",
 			"path": "github.com/irellik/gblog/controller",
-			"revision": "1dc487c6bc0eb9ca8b4d1da2a62ad9cc5888c833",
-			"revisionTime": "2018-09-07T02:40:50Z"
+			"revision": "8f38b0f32e409614cbfc6b33cdcc51d8317f23f1",
+			"revisionTime": "2018-09-07T02:46:50Z"
 		},
 		{
 			"checksumSHA1": "BEz4r4fwmxNtugwNHX6o9SHyZjU=",
 			"path": "github.com/irellik/gblog/helpers",
-			"revision": "1dc487c6bc0eb9ca8b4d1da2a62ad9cc5888c833",
-			"revisionTime": "2018-09-07T02:40:50Z"
+			"revision": "8f38b0f32e409614cbfc6b33cdcc51d8317f23f1",
+			"revisionTime": "2018-09-07T02:46:50Z"
 		},
 		{
-			"checksumSHA1": "Mr2vtD+9nazzKGIcp8ahK82Vvn0=",
+			"checksumSHA1": "k7uLE6wkeB4Ufw3ddMVB0rCbNXU=",
 			"path": "github.com/irellik/gblog/model",
-			"revision": "1dc487c6bc0eb9ca8b4d1da2a62ad9cc5888c833",
-			"revisionTime": "2018-09-07T02:40:50Z"
+			"revision": "8f38b0f32e409614cbfc6b33cdcc51d8317f23f1",
+			"revisionTime": "2018-09-07T02:46:50Z"
 		},
 		{
 			"checksumSHA1": "duimFbkjcFDB3D0fuOWqm1pDRVI=",
@@ -77,14 +77,14 @@
 		{
 			"checksumSHA1": "N7OHwgDjq/qlC1BKTR2FWCfnYNA=",
 			"path": "github.com/irellik/gblog/service/local",
-			"revision": "1dc487c6bc0eb9ca8b4d1da2a62ad9cc5888c833",
-			"revisionTime": "2018-09-07T02:40:50Z"
+			"revision": "8f38b0f32e409614cbfc6b33cdcc51d8317f23f1",
+			"revisionTime": "2018-09-07T02:46:50Z"
 		},
 		{
 			"checksumSHA1": "Pe+XAF7CoZngrrKCWsoLPrk/2D4=",
 			"path": "github.com/irellik/gblog/service/third",
-			"revision": "1dc487c6bc0eb9ca8b4d1da2a62ad9cc5888c833",
-			"revisionTime": "2018-09-07T02:40:50Z"
+			"revision": "8f38b0f32e409614cbfc6b33cdcc51d8317f23f1",
+			"revisionTime": "2018-09-07T02:46:50Z"
 		},
 		{
 			"checksumSHA1": "GiVgQkx5acnq+JZtYiuHPlhHoso=",

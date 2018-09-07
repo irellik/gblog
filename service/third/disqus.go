@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/irellik/gblog/helpers"
 	"github.com/irellik/gblog/model"
+	"log"
 	"regexp"
 	"strconv"
 	"strings"
@@ -30,7 +31,11 @@ func UpdateCommentCount() {
 	for _, arr := range jobList {
 		paramStr += strings.Join(arr, ".html&1=")
 		commentCountUrl := "http://iwww.disqus.com/count-data.js?1=" + paramStr + ".html"
-		response := helpers.HttpGet(commentCountUrl)
+		response, err := helpers.HttpGet(commentCountUrl)
+		if err != nil {
+			log.Println(err)
+			time.Sleep(time.Second * 5)
+		}
 		countRegexp := regexp.MustCompile(`\"counts\":(\[\{\"id\":\".*\])\}\);`)
 		params := countRegexp.FindStringSubmatch(response)
 		countList := params[1]

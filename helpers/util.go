@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func HttpGet(url string) string {
+func HttpGet(url string) (string, error) {
 	resp, err := http.Get(url)
 	if err != nil {
 		log.Println(err)
@@ -14,8 +14,5 @@ func HttpGet(url string) string {
 
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Println(err)
-	}
-	return string(body)
+	return string(body), err
 }
