@@ -45,28 +45,28 @@
 			"revisionTime": "2018-08-21T05:17:52Z"
 		},
 		{
-			"checksumSHA1": "QF9AoX+YYlcA5Ktu+NX6fTztN6Q=",
+			"checksumSHA1": "iqP1EMltCUN8jAJEHOzUJsAicBY=",
 			"path": "github.com/irellik/gblog",
-			"revision": "ab3cb6a356b011af76a2b15bacd6ce0b9d73caa1",
-			"revisionTime": "2018-09-07T03:24:24Z"
+			"revision": "7be70b22ecc686c9a0b416408400a2f6b87574f2",
+			"revisionTime": "2018-09-07T05:05:22Z"
 		},
 		{
-			"checksumSHA1": "KCwhkDowgJxfdFmSwMtWfwRB3ZE=",
+			"checksumSHA1": "R+Dj4fUGJiR2PubyVv3A+ulp2iY=",
 			"path": "github.com/irellik/gblog/controller",
-			"revision": "ab3cb6a356b011af76a2b15bacd6ce0b9d73caa1",
-			"revisionTime": "2018-09-07T03:24:24Z"
+			"revision": "7be70b22ecc686c9a0b416408400a2f6b87574f2",
+			"revisionTime": "2018-09-07T05:05:22Z"
 		},
 		{
 			"checksumSHA1": "I4bMp/b85PRhhBPlFb0CL0zfGGU=",
 			"path": "github.com/irellik/gblog/helpers",
-			"revision": "ab3cb6a356b011af76a2b15bacd6ce0b9d73caa1",
-			"revisionTime": "2018-09-07T03:24:24Z"
+			"revision": "7be70b22ecc686c9a0b416408400a2f6b87574f2",
+			"revisionTime": "2018-09-07T05:05:22Z"
 		},
 		{
 			"checksumSHA1": "t03N2UkxMh6aXEv+bO55tHW6hTY=",
 			"path": "github.com/irellik/gblog/model",
-			"revision": "ab3cb6a356b011af76a2b15bacd6ce0b9d73caa1",
-			"revisionTime": "2018-09-07T03:24:24Z"
+			"revision": "7be70b22ecc686c9a0b416408400a2f6b87574f2",
+			"revisionTime": "2018-09-07T05:05:22Z"
 		},
 		{
 			"checksumSHA1": "duimFbkjcFDB3D0fuOWqm1pDRVI=",
@@ -77,14 +77,14 @@
 		{
 			"checksumSHA1": "N7OHwgDjq/qlC1BKTR2FWCfnYNA=",
 			"path": "github.com/irellik/gblog/service/local",
-			"revision": "ab3cb6a356b011af76a2b15bacd6ce0b9d73caa1",
-			"revisionTime": "2018-09-07T03:24:24Z"
+			"revision": "7be70b22ecc686c9a0b416408400a2f6b87574f2",
+			"revisionTime": "2018-09-07T05:05:22Z"
 		},
 		{
 			"checksumSHA1": "boateyM490Stg8uvc3dc3M8LASA=",
 			"path": "github.com/irellik/gblog/service/third",
-			"revision": "ab3cb6a356b011af76a2b15bacd6ce0b9d73caa1",
-			"revisionTime": "2018-09-07T03:24:24Z"
+			"revision": "7be70b22ecc686c9a0b416408400a2f6b87574f2",
+			"revisionTime": "2018-09-07T05:05:22Z"
 		},
 		{
 			"checksumSHA1": "GiVgQkx5acnq+JZtYiuHPlhHoso=",
