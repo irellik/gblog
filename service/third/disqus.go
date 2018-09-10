@@ -50,6 +50,7 @@ func UpdateCommentCount() {
 			}
 			time.Sleep(time.Second * 5)
 		}
+		time.Sleep(time.Second * 60)
 	}
 
 }

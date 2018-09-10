@@ -305,6 +305,9 @@ func UpdateCommentCount(id int, count int) int64 {
 
 // 更新
 func updateRows(table string, conditions []map[string]string, targets map[string]string) int64 {
+	if len(targets) == 0 {
+		return 0
+	}
 	whereList := make([]string, 0)
 	for _, condition := range conditions {
 		var express string
