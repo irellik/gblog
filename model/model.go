@@ -305,7 +305,7 @@ func UpdateCommentCount(id int, count int) int64 {
 
 // 更新
 func updateRows(table string, conditions []map[string]string, targets map[string]string) int64 {
-	if len(targets) == 0 {
+	if len(targets) == 0 || len(conditions) == 0 {
 		return 0
 	}
 	whereList := make([]string, 0)
@@ -326,6 +326,7 @@ func updateRows(table string, conditions []map[string]string, targets map[string
 	}
 	updateStr := strings.Join(updateList, ",")
 	rowsSql := fmt.Sprintf("update %s set %s where %s", table, updateStr, whereStr)
+	fmt.Println(rowsSql)
 	db := sl.MysqlClient
 	stmt, _ := db.Prepare(rowsSql)
 	res, _ := stmt.Exec()
