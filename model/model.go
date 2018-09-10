@@ -328,8 +328,17 @@ func updateRows(table string, conditions []map[string]string, targets map[string
 	rowsSql := fmt.Sprintf("update %s set %s where %s", table, updateStr, whereStr)
 	fmt.Println(rowsSql)
 	db := sl.MysqlClient
-	stmt, _ := db.Prepare(rowsSql)
-	res, _ := stmt.Exec()
-	num, _ := res.RowsAffected()
+	stmt, err := db.Prepare(rowsSql)
+	if err != nil {
+		log.Fatal(err)
+	}
+	res, err := stmt.Exec()
+	if err != nil {
+		log.Fatal(err)
+	}
+	num, err := res.RowsAffected()
+	if err != nil {
+		log.Fatal(err)
+	}
 	return num
 }
