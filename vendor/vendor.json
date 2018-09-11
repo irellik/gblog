@@ -41,32 +41,32 @@
 		{
 			"checksumSHA1": "CbzNfOvaT1G3G9WILmsyjYfYTO0=",
 			"path": "github.com/golang/protobuf/proto",
-			"revision": "b27b920f9e71b439b873b17bf99f56467623814a",
-			"revisionTime": "2018-08-21T05:17:52Z"
+			"revision": "e344474228f55cc8e5f2342b0493b71bcdd258f4",
+			"revisionTime": "2018-09-10T22:49:16Z"
 		},
 		{
 			"checksumSHA1": "PL5Tm2+WqmBKUGDk5uga8/4FxOk=",
 			"path": "github.com/irellik/gblog",
-			"revision": "865495e41deb7e600103b062e0808cf7b6cc2791",
-			"revisionTime": "2018-09-10T07:01:38Z"
+			"revision": "a69c3a1fcf99d6e3ebb042fbe3726b7736a771e9",
+			"revisionTime": "2018-09-11T00:22:07Z"
 		},
 		{
 			"checksumSHA1": "hTo7ZXR92C26+e+4Nlr8frGuXF0=",
 			"path": "github.com/irellik/gblog/controller",
-			"revision": "865495e41deb7e600103b062e0808cf7b6cc2791",
-			"revisionTime": "2018-09-10T07:01:38Z"
+			"revision": "a69c3a1fcf99d6e3ebb042fbe3726b7736a771e9",
+			"revisionTime": "2018-09-11T00:22:07Z"
 		},
 		{
 			"checksumSHA1": "I4bMp/b85PRhhBPlFb0CL0zfGGU=",
 			"path": "github.com/irellik/gblog/helpers",
-			"revision": "865495e41deb7e600103b062e0808cf7b6cc2791",
-			"revisionTime": "2018-09-10T07:01:38Z"
+			"revision": "a69c3a1fcf99d6e3ebb042fbe3726b7736a771e9",
+			"revisionTime": "2018-09-11T00:22:07Z"
 		},
 		{
-			"checksumSHA1": "LP3b4i2bjhySvhThsLa874uYE+8=",
+			"checksumSHA1": "ZrwBOQyai2Lr7+JAeRr/STlCdsI=",
 			"path": "github.com/irellik/gblog/model",
-			"revision": "865495e41deb7e600103b062e0808cf7b6cc2791",
-			"revisionTime": "2018-09-10T07:01:38Z"
+			"revision": "a69c3a1fcf99d6e3ebb042fbe3726b7736a771e9",
+			"revisionTime": "2018-09-11T00:22:07Z"
 		},
 		{
 			"checksumSHA1": "duimFbkjcFDB3D0fuOWqm1pDRVI=",
@@ -77,14 +77,14 @@
 		{
 			"checksumSHA1": "N7OHwgDjq/qlC1BKTR2FWCfnYNA=",
 			"path": "github.com/irellik/gblog/service/local",
-			"revision": "865495e41deb7e600103b062e0808cf7b6cc2791",
-			"revisionTime": "2018-09-10T07:01:38Z"
+			"revision": "a69c3a1fcf99d6e3ebb042fbe3726b7736a771e9",
+			"revisionTime": "2018-09-11T00:22:07Z"
 		},
 		{
 			"checksumSHA1": "TIN8wtGZdDfRm+O4V0xhOk7V5bk=",
 			"path": "github.com/irellik/gblog/service/third",
-			"revision": "865495e41deb7e600103b062e0808cf7b6cc2791",
-			"revisionTime": "2018-09-10T07:01:38Z"
+			"revision": "a69c3a1fcf99d6e3ebb042fbe3726b7736a771e9",
+			"revisionTime": "2018-09-11T00:22:07Z"
 		},
 		{
 			"checksumSHA1": "GiVgQkx5acnq+JZtYiuHPlhHoso=",
