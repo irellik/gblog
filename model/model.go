@@ -336,6 +336,7 @@ func updateRows(table string, conditions []map[string]string, targets map[string
 	if err != nil {
 		return 0
 	}
+	defer stmt.Close()
 	num, err := res.RowsAffected()
 	if err != nil {
 		return 0
