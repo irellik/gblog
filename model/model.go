@@ -330,15 +330,15 @@ func updateRows(table string, conditions []map[string]string, targets map[string
 	db := sl.MysqlClient
 	stmt, err := db.Prepare(rowsSql)
 	if err != nil {
-		log.Fatal(err)
+		return 0
 	}
 	res, err := stmt.Exec()
 	if err != nil {
-		log.Fatal(err)
+		return 0
 	}
 	num, err := res.RowsAffected()
 	if err != nil {
-		log.Fatal(err)
+		return 0
 	}
 	return num
 }
