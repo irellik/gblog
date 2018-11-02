@@ -326,7 +326,6 @@ func updateRows(table string, conditions []map[string]string, targets map[string
 	}
 	updateStr := strings.Join(updateList, ",")
 	rowsSql := fmt.Sprintf("update %s set %s where %s", table, updateStr, whereStr)
-	fmt.Println(rowsSql)
 	db := sl.MysqlClient
 	stmt, err := db.Prepare(rowsSql)
 	if err != nil {
