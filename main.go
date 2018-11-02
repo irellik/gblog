@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/irellik/gblog/controller"
 	"github.com/irellik/gblog/helpers"
@@ -19,6 +20,11 @@ func main() {
 	//var LayoutView = filepath.Join(getCurrentPath(), "./views/layout.html")
 	// Disable Console Color
 	// gin.DisableConsoleColor()
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println(err)
+		}
+	}()
 	// 更新评论
 	go st.UpdateCommentCount()
 	// Creates a gin router with default middleware:
