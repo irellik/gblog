@@ -1,7 +1,6 @@
 package main
 
 import (
-	adminController "gblog/controller/admin"
 	"github.com/gin-gonic/gin"
 	"github.com/irellik/gblog/controller"
 	"github.com/irellik/gblog/helpers"
@@ -36,12 +35,6 @@ func main() {
 	router.GET("/tag/:tag", controller.TagIndex)
 	router.GET("/post/:id", controller.Article)
 	router.GET("/search/:keyword", controller.Search)
-
-	admin := router.Group("/admin")
-	admin.Use(authMiddleware)
-	{
-		admin.GET("/", adminController.Index)
-	}
 
 	// By default it serves on :8080 unless a
 	// PORT environment variable was defined.
