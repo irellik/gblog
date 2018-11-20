@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	adminController "gblog/controller/admin"
 	"github.com/gin-gonic/gin"
 	"github.com/irellik/gblog/controller"
 	"github.com/irellik/gblog/helpers"
@@ -20,11 +20,7 @@ func main() {
 	//var LayoutView = filepath.Join(getCurrentPath(), "./views/layout.html")
 	// Disable Console Color
 	// gin.DisableConsoleColor()
-	defer func() {
-		if err := recover(); err != nil {
-			fmt.Println(err)
-		}
-	}()
+
 	// 更新评论
 	go st.UpdateCommentCount()
 	// Creates a gin router with default middleware:
@@ -41,10 +37,23 @@ func main() {
 	router.GET("/post/:id", controller.Article)
 	router.GET("/search/:keyword", controller.Search)
 
+	admin := router.Group("/admin")
+	admin.Use(authMiddleware)
+	{
+		admin.GET("/", adminController.Index)
+	}
+
 	// By default it serves on :8080 unless a
 	// PORT environment variable was defined.
 	router.Run(globalConfig.Site.Address)
 	// router.Run(":3000") for a hard coded port
+}
+
+func authMiddleware(c *gin.Context) {
+
+	// Pass on to the next-in-chain
+
+	c.Next()
 }
 
 func loadView(engine *gin.Engine) {

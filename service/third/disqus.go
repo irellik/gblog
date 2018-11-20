@@ -2,6 +2,7 @@ package third
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/irellik/gblog/helpers"
 	"github.com/irellik/gblog/model"
 	"log"
@@ -18,6 +19,11 @@ type CommentCount struct {
 
 func UpdateCommentCount() {
 	for {
+		defer func() {
+			if err := recover(); err != nil {
+				fmt.Println(err)
+			}
+		}()
 		idList := model.GetAllPostId()
 		chunkSize := 5
 		jobList := make([][]string, 0)
