@@ -75,34 +75,34 @@
 			"revisionTime": "2018-10-14T08:38:51Z"
 		},
 		{
-			"checksumSHA1": "L8CBoojnUjv1ingPk8ImxfzO9zM=",
+			"checksumSHA1": "lM/E+PBoaqN7rA2oROJjjSeg5t8=",
 			"path": "github.com/irellik/gblog",
-			"revision": "c786617fac6ef485c0537afe87acb67893e48124",
-			"revisionTime": "2018-11-24T06:28:31Z"
+			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
+			"revisionTime": "2018-11-24T07:21:39Z"
 		},
 		{
 			"checksumSHA1": "hTo7ZXR92C26+e+4Nlr8frGuXF0=",
 			"path": "github.com/irellik/gblog/controller",
-			"revision": "c786617fac6ef485c0537afe87acb67893e48124",
-			"revisionTime": "2018-11-24T06:28:31Z"
+			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
+			"revisionTime": "2018-11-24T07:21:39Z"
 		},
 		{
 			"checksumSHA1": "VB42rN0UWH82FYO0wAFkOKclXyA=",
 			"path": "github.com/irellik/gblog/controller/admin",
-			"revision": "c786617fac6ef485c0537afe87acb67893e48124",
-			"revisionTime": "2018-11-24T06:28:31Z"
+			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
+			"revisionTime": "2018-11-24T07:21:39Z"
 		},
 		{
 			"checksumSHA1": "I4bMp/b85PRhhBPlFb0CL0zfGGU=",
 			"path": "github.com/irellik/gblog/helpers",
-			"revision": "c786617fac6ef485c0537afe87acb67893e48124",
-			"revisionTime": "2018-11-24T06:28:31Z"
+			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
+			"revisionTime": "2018-11-24T07:21:39Z"
 		},
 		{
-			"checksumSHA1": "uyamUBmDMwpTaZdlltcg4sUEtCs=",
+			"checksumSHA1": "0CUz10Hja7LvomiO+qkq7/kJpF4=",
 			"path": "github.com/irellik/gblog/model",
-			"revision": "c786617fac6ef485c0537afe87acb67893e48124",
-			"revisionTime": "2018-11-24T06:28:31Z"
+			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
+			"revisionTime": "2018-11-24T07:21:39Z"
 		},
 		{
 			"checksumSHA1": "duimFbkjcFDB3D0fuOWqm1pDRVI=",
@@ -111,16 +111,16 @@
 			"revisionTime": "2018-09-07T02:23:18Z"
 		},
 		{
-			"checksumSHA1": "bovSMyjAtaamw9GkzHteVEk6MpA=",
+			"checksumSHA1": "6QehjtPcZAy7vqfC3G3XSvq38uE=",
 			"path": "github.com/irellik/gblog/service/local",
-			"revision": "c786617fac6ef485c0537afe87acb67893e48124",
-			"revisionTime": "2018-11-24T06:28:31Z"
+			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
+			"revisionTime": "2018-11-24T07:21:39Z"
 		},
 		{
 			"checksumSHA1": "UGiB6HgonzIFUMvY7VQlZWMWqRY=",
 			"path": "github.com/irellik/gblog/service/third",
-			"revision": "c786617fac6ef485c0537afe87acb67893e48124",
-			"revisionTime": "2018-11-24T06:28:31Z"
+			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
+			"revisionTime": "2018-11-24T07:21:39Z"
 		},
 		{
 			"checksumSHA1": "GiVgQkx5acnq+JZtYiuHPlhHoso=",

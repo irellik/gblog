@@ -69,17 +69,17 @@ func SetAdmin() (string, error) {
 	}
 	sql := "replace into `users` (`id`,`nickname`,`username`,`email`,`password`,`remember_token`,`created_at`,`last_login_at`,`last_login_ip`) values (?,?,?,?,?,?,?,?,?)"
 	db := sl.MysqlClient
-	stmt, err := db.Prepare(sql)
-	if err != nil {
+	stmt, errPre := db.Prepare(sql)
+	if errPre != nil {
 		return password, err
 	}
 	defer stmt.Close()
-	res, err := stmt.Exec(1, "管理员", "admin", "", password_hash, "", time.Now(), "", 0)
-	if err != nil {
+	res, errExc := stmt.Exec(1, "管理员", "admin", "", password_hash, "", time.Now(), "", 0)
+	if errExc != nil {
 		return password, err
 	}
-	_, err = res.RowsAffected()
-	if err != nil {
+	_, errAff := res.RowsAffected()
+	if errAff != nil {
 		return password, err
 	}
 	return password, nil

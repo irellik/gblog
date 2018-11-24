@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	admin2 "gblog/controller/admin"
+	"gblog/model"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
@@ -27,7 +28,7 @@ func init() {
 func main() {
 	flag.Parse()
 	if command == "set:admin" {
-		password, err := sl.setAdmin()
+		password, err := model.SetAdmin()
 		if err != nil {
 			fmt.Println(err)
 		} else {
