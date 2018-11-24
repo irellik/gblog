@@ -7,3 +7,5 @@ mysql:
 site:
   pageSize: 10
   address: :8080
+  remember_days: 30
+appKey: T1SDu7fxVR6PogZ1TCr8Ou8FlCWGYvWD

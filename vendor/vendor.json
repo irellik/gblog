@@ -3,6 +3,18 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "H5YFYmUpnlLVKNBk+HXH/wYJLw4=",
+			"path": "github.com/gin-contrib/sessions",
+			"revision": "58cbcf30135cc04c55e4499757142265d58e62d6",
+			"revisionTime": "2018-08-27T02:54:25Z"
+		},
+		{
+			"checksumSHA1": "eyvExzi+ADNi3cMXeld05hHhWkA=",
+			"path": "github.com/gin-contrib/sessions/cookie",
+			"revision": "58cbcf30135cc04c55e4499757142265d58e62d6",
+			"revisionTime": "2018-08-27T02:54:25Z"
+		},
+		{
 			"checksumSHA1": "QeKwBtN2df+j+4stw3bQJ6yO4EY=",
 			"path": "github.com/gin-contrib/sse",
 			"revision": "22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae",
@@ -45,6 +57,24 @@
 			"revisionTime": "2018-11-20T00:18:57Z"
 		},
 		{
+			"checksumSHA1": "oHwfghigjTz8Xs+ssxwdl/atb44=",
+			"path": "github.com/gorilla/context",
+			"revision": "51ce91d2eaddeca0ef29a71d766bb3634dadf729",
+			"revisionTime": "2018-10-12T15:35:48Z"
+		},
+		{
+			"checksumSHA1": "NScdwrIOpSH9hoP7i3a6JGmE5rw=",
+			"path": "github.com/gorilla/securecookie",
+			"revision": "e65cf8c5df817c89aeb47ecb46064e802e2de943",
+			"revisionTime": "2018-10-10T17:46:47Z"
+		},
+		{
+			"checksumSHA1": "7gHiWm6pPBlsiDmlSwIPHJnjRWI=",
+			"path": "github.com/gorilla/sessions",
+			"revision": "68d1edeb366b66bdd5d714e32d7a065f74b03b9b",
+			"revisionTime": "2018-10-14T08:38:51Z"
+		},
+		{
 			"checksumSHA1": "knEeNQERiszGzA9CpZCC3PfLHiU=",
 			"path": "github.com/irellik/gblog",
 			"revision": "6e7733ee1641a021366279e1e37a8047fec61bc3",
@@ -53,6 +83,12 @@
 		{
 			"checksumSHA1": "hTo7ZXR92C26+e+4Nlr8frGuXF0=",
 			"path": "github.com/irellik/gblog/controller",
+			"revision": "6e7733ee1641a021366279e1e37a8047fec61bc3",
+			"revisionTime": "2018-11-20T05:34:55Z"
+		},
+		{
+			"checksumSHA1": "UOZ35B0jsxLt3PLqRwRnt4sU09k=",
+			"path": "github.com/irellik/gblog/controller/admin",
 			"revision": "6e7733ee1641a021366279e1e37a8047fec61bc3",
 			"revisionTime": "2018-11-20T05:34:55Z"
 		},

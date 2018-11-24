@@ -1,16 +1,21 @@
 package local
 
 import (
+	"bytes"
+	"crypto/aes"
+	"crypto/cipher"
 	"flag"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // 定义配置文件yaml结构
@@ -25,10 +30,15 @@ type Config struct {
 	Site struct {
 		PageSize int    `yaml:"pageSize"`
 		Address  string `yaml:"address"`
-	}
+	} `yaml:"site"`
+	AppKey string `yaml:"appKey"`
 }
 
 var globalConfig = Config{}
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
 
 // 载入配置文件
 func LoadConfig() {
@@ -42,6 +52,16 @@ func LoadConfig() {
 	err = yaml.Unmarshal(yamlFile, &globalConfig)
 	if err != nil {
 		log.Fatalf("Unmarshal: %v", err)
+	}
+	// 检查AppKey是否合法
+	if len(globalConfig.AppKey) != 32 {
+		globalConfig.AppKey = RandStr(32)
+		yamlText, err := yaml.Marshal(globalConfig)
+		if err != nil {
+			log.Fatalf("Unmarshal: %v", err)
+		}
+		// 重写配置文件
+		ioutil.WriteFile(*confFile, yamlText, 0644)
 	}
 }
 
@@ -66,4 +86,59 @@ func GetCurrentPath() string {
 		log.Fatalf("%s", err)
 	}
 	return strings.Replace(path, "\\", "/", -1)
+}
+
+func RandStr(length int) string {
+	letter := []byte("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	randStr := make([]byte, length)
+	for i := range randStr {
+		randStr[i] = letter[rand.Intn(len(letter))]
+	}
+	return string(randStr)
+}
+
+func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
+	padding := blockSize - len(ciphertext)%blockSize
+	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
+	return append(ciphertext, padtext...)
+}
+
+func PKCS7UnPadding(origData []byte) []byte {
+	length := len(origData)
+	unpadding := int(origData[length-1])
+	return origData[:(length - unpadding)]
+}
+
+func AesEncrypt(origData, key []byte) ([]byte, error) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	blockSize := block.BlockSize()
+	origData = PKCS7Padding(origData, blockSize)
+	blockMode := cipher.NewCBCEncrypter(block, key[:blockSize])
+	crypted := make([]byte, len(origData))
+	blockMode.CryptBlocks(crypted, origData)
+	return crypted, nil
+}
+
+func AesDecrypt(crypted, key []byte) ([]byte, error) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	blockSize := block.BlockSize()
+	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize])
+	origData := make([]byte, len(crypted))
+	blockMode.CryptBlocks(origData, crypted)
+	origData = PKCS7UnPadding(origData)
+	return origData, nil
+}
+
+func Encrypt(data []byte) ([]byte, error) {
+	return AesEncrypt(data, []byte(globalConfig.AppKey))
+}
+
+func Decrypt(data []byte) ([]byte, error) {
+	return AesDecrypt(data, []byte(globalConfig.AppKey))
 }

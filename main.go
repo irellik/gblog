@@ -1,12 +1,17 @@
 package main
 
 import (
+	admin2 "gblog/controller/admin"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/irellik/gblog/controller"
+	"github.com/irellik/gblog/controller/admin"
 	"github.com/irellik/gblog/helpers"
 	sl "github.com/irellik/gblog/service/local"
 	st "github.com/irellik/gblog/service/third"
 	"html/template"
+	"net/http"
 	"path/filepath"
 )
 
@@ -25,6 +30,8 @@ func main() {
 	// Creates a gin router with default middleware:
 	// logger and recovery (crash-free) middleware
 	router := gin.Default()
+	// 静态文件
+	router.Static("/static", "./static")
 	// 定义模板位置
 	loadView(router)
 	router.GET("/", controller.Index)
@@ -36,16 +43,28 @@ func main() {
 	router.GET("/post/:id", controller.Article)
 	router.GET("/search/:keyword", controller.Search)
 
+	router_admin := router.Group("/admin")
+	//// session
+	store := cookie.NewStore([]byte("secret"))
+	router_admin.Use(sessions.Sessions("my_session", store))
+	router_admin.Use(authMiddleware)
+
+	{
+		router_admin.GET("/", admin.Index)
+	}
+	router.GET("/login", admin2.LoginView)
+	router.POST("/login", admin2.Login)
 	// By default it serves on :8080 unless a
 	// PORT environment variable was defined.
 	router.Run(globalConfig.Site.Address)
-	// router.Run(":3000") for a hard coded port
 }
 
 func authMiddleware(c *gin.Context) {
-
-	// Pass on to the next-in-chain
-
+	session := sessions.Default(c)
+	user_info := session.Get("user_info")
+	if user_info == nil {
+		c.Redirect(http.StatusFound, "/login")
+	}
 	c.Next()
 }
 
