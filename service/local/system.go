@@ -43,7 +43,7 @@ func init() {
 // 载入配置文件
 func LoadConfig() {
 	currentPath := GetCurrentPath()
-	confFile := flag.String("c", fmt.Sprintf("%s/config/app.yaml", currentPath), "配置文件")
+	confFile := flag.String("config", fmt.Sprintf("%s/config/app.yaml", currentPath), "配置文件")
 	flag.Parse()
 	yamlFile, err := ioutil.ReadFile(*confFile)
 	if err != nil {

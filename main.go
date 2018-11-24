@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	admin2 "gblog/controller/admin"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
@@ -12,10 +14,27 @@ import (
 	st "github.com/irellik/gblog/service/third"
 	"html/template"
 	"net/http"
+	"os"
 	"path/filepath"
 )
 
+var command string
+
+func init() {
+	flag.StringVar(&command, "command", "", "some command")
+}
+
 func main() {
+	flag.Parse()
+	if command == "set:admin" {
+		password, err := sl.setAdmin()
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Printf("管理员已经设置，账号是admin,密码是%s", password)
+		}
+		os.Exit(0)
+	}
 	// 加载全局配置
 	sl.LoadConfig()
 	globalConfig := sl.GetConfig()

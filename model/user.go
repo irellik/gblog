@@ -49,14 +49,38 @@ func Auth(username string, password string, remember bool, clientIp string) (Use
 	if err != nil {
 		return user, false
 	}
+	defer stmt.Close()
 	res, err := stmt.Exec(clientIp, rememberToken, username)
 	if err != nil {
 		return user, false
 	}
-	defer stmt.Close()
 	_, err = res.RowsAffected()
 	if err != nil {
 		return user, false
 	}
 	return user, true
+}
+
+func SetAdmin() (string, error) {
+	password := sl.RandStr(8)
+	password_hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return password, err
+	}
+	sql := "replace into `users` (`id`,`nickname`,`username`,`email`,`password`,`remember_token`,`created_at`,`last_login_at`,`last_login_ip`) values (?,?,?,?,?,?,?,?,?)"
+	db := sl.MysqlClient
+	stmt, err := db.Prepare(sql)
+	if err != nil {
+		return password, err
+	}
+	defer stmt.Close()
+	res, err := stmt.Exec(1, "管理员", "admin", "", password_hash, "", time.Now(), "", 0)
+	if err != nil {
+		return password, err
+	}
+	_, err = res.RowsAffected()
+	if err != nil {
+		return password, err
+	}
+	return password, nil
 }
