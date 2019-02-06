@@ -12,5 +12,4 @@ go build
 ./gblog
 ```
 
-使用Nginx做服务器，反向代理Golang，代码没有对静态文件做处理，直接由Nginx返回，
-详情页路由 /1.html使用Nginx rewrite 到 /post/1
+使用Nginx做服务器，反向代理Golang，详情页路由 /1.html使用Nginx rewrite 到 /post/1
