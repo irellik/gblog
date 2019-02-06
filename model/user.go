@@ -1,8 +1,7 @@
 package model
 
 import (
-	"fmt"
-	sl "github.com/irellik/gblog/service/local"
+	sl "gblog/service/local"
 	"golang.org/x/crypto/bcrypt"
 	"time"
 )
@@ -19,46 +18,34 @@ type User struct {
 	LastLoginIp   int       `json:"last_login_ip"`
 }
 
-func Auth(username string, password string, remember bool, clientIp string) (User, bool) {
+func Auth(username string, password string, clientIp int64) (User, error) {
 	db := sl.MysqlClient
-	rowSql := "select * from users where `username` = ? limit 1"
+	rowSql := "select `id`,`nickname`,`username`,`email`,`password`,`remember_token`,`created_at`,`last_login_at`,`last_login_ip` from users where `username` = ? limit 1"
 	var user User
 	var err error
-	var rememberToken []byte
-	err = db.QueryRow(rowSql, username).Scan(&user)
+	err = db.QueryRow(rowSql, username).Scan(&user.Id,&user.Nickname,&user.Username,&user.Email,&user.Password,&user.RememberToken,&user.CreatedAt,&user.LastLoginAt,&user.LastLoginIp)
 	if err != nil {
-		return user, false
+		return user, err
 	}
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if err != nil {
-		return user, false
-	} else {
-		// 密码验证成功
-		if remember {
-			sourceToken := []byte(fmt.Sprintf("%s-%s", sl.RandStr(16), string(time.Now().AddDate(0, 0, 30).Unix())))
-			rememberToken, err = sl.Encrypt(sourceToken)
-			if err != nil {
-				return user, false
-			}
-		} else {
-			rememberToken = []byte("")
-		}
+		return user, err
 	}
-	sql := "update users set `last_login_ip` = ?,`remember_token` = ? where `username` = ?"
+	sql := "update users set `last_login_ip` = ? where `username` = ?"
 	stmt, err := db.Prepare(sql)
 	if err != nil {
-		return user, false
+		return user, err
 	}
 	defer stmt.Close()
-	res, err := stmt.Exec(clientIp, rememberToken, username)
+	res, err := stmt.Exec(clientIp, username)
 	if err != nil {
-		return user, false
+		return user, err
 	}
 	_, err = res.RowsAffected()
 	if err != nil {
-		return user, false
+		return user, err
 	}
-	return user, true
+	return user, err
 }
 
 func SetAdmin() (string, error) {
@@ -71,16 +58,16 @@ func SetAdmin() (string, error) {
 	db := sl.MysqlClient
 	stmt, errPre := db.Prepare(sql)
 	if errPre != nil {
-		return password, err
+		return password, errPre
 	}
 	defer stmt.Close()
-	res, errExc := stmt.Exec(1, "管理员", "admin", "", password_hash, "", time.Now(), "", 0)
+	res, errExc := stmt.Exec(1, "管理员", "admin", "", string(password_hash), "", time.Now(), time.Now(), 0)
 	if errExc != nil {
-		return password, err
+		return password, errExc
 	}
 	_, errAff := res.RowsAffected()
 	if errAff != nil {
-		return password, err
+		return password, errAff
 	}
 	return password, nil
 }

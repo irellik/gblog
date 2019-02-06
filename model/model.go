@@ -3,36 +3,12 @@ package model
 import (
 	"database/sql"
 	"fmt"
-	"github.com/irellik/gblog/helpers"
-	sl "github.com/irellik/gblog/service/local"
-	"html/template"
+	sl "gblog/service/local"
 	"log"
 	"strconv"
 	"strings"
-	"time"
 )
 
-//文章
-
-type Post struct {
-	Id           int    `json:"id" form:"id"`
-	Title        string `json:"title" form:"title"`
-	Content      string `json:"content" form:"content"`
-	ContentHtml  template.HTML
-	Status       int8      `json:"status" form:"status"`
-	AuthorId     int       `json:"author_id" form:"author_id"`
-	CatId        int       `json:"cat_id" form:"cat_id"`
-	PublishedAt  time.Time `json:"published_at" form:"published_at"`
-	CreatedAt    time.Time `json:"created_at" form:"created_at"`
-	UpdatedAt    time.Time `json:"updated_at" form:"updated_at"`
-	Abstract     string    `json:"abstract" form:"abstract"`
-	CommentCount uint64    `json:"comments_count" form:"comments_count"`
-	TagImg       string    `json:"tag_img" form:"tag_img"`
-	TagName      string    `json:"tag_name"`
-	CName        string    `json:"name" form:"name"`
-	CEnName      string    `json:"en_name" form:"en_name"`
-	Tags         []Tag     `json:"tag"`
-}
 
 type Tag struct {
 	Id        int    `json:"id" form:"id"`
@@ -45,15 +21,6 @@ type Tag struct {
 type Setting struct {
 	Key   string `json:"key" form:"key"`
 	Value string `json:"value" form:"value"`
-}
-
-// 栏目
-type Category struct {
-	Id          int    `json:"id" form:"id"`
-	Name        string `json:"name" form:"name"`
-	Description string `json:"description" form:"name"`
-	EnName      string `json:"en_name" form:"en_name"`
-	PostCount   int    `json:"post_count"`
 }
 
 type Friends struct {
@@ -69,59 +36,6 @@ var tagTable string = "tags"
 var friendsTable string = "friends"
 var postTagTable string = "post_tag"
 
-// 获取文章列表
-func GetPosts(category string, offset int, limit int, search bool) ([]Post, int) {
-	db := sl.MysqlClient
-	rowsSql := fmt.Sprintf("select p.id,p.title,p.content,p.published_at,c.name,c.en_name,p.comments_count,p.abstract,p.content from %s as p left join %s as c on p.cat_id = c.id where p.status = 1 order by p.id desc limit %d,%d", postTable, categoryTable, offset, limit)
-	countSql := fmt.Sprintf("select count(*) as total from %s where status = 1", postTable)
-	var rows *sql.Rows
-	var err error
-	if category != "" {
-		if search {
-			rowsSql = fmt.Sprintf("select p.id,p.title,p.content,p.published_at,c.name,c.en_name,p.comments_count,p.abstract,p.content from %s as p left join %s as c on p.cat_id = c.id where p.content like ? and p.status = 1 order by p.id desc limit %d,%d", postTable, categoryTable, offset, limit)
-			countSql = fmt.Sprintf("select count(*) as total from %s as p left join %s as c on p.cat_id = c.id where p.content like ? and p.status = 1", postTable, categoryTable)
-			category = "%" + category + "%"
-		} else {
-			rowsSql = fmt.Sprintf("select p.id,p.title,p.content,p.published_at,c.name,c.en_name,p.comments_count,p.abstract,p.content from %s as p left join %s as c on p.cat_id = c.id where c.en_name = ? and p.status = 1 order by p.id desc limit %d,%d", postTable, categoryTable, offset, limit)
-			countSql = fmt.Sprintf("select count(*) as total from %s as p left join %s as c on p.cat_id = c.id where c.en_name = ? and p.status = 1", postTable, categoryTable)
-		}
-		rows, err = db.Query(rowsSql, category)
-	} else {
-		rows, err = db.Query(rowsSql)
-	}
-
-	if err != nil {
-		log.Fatalln(err)
-	}
-	defer rows.Close()
-	posts := make([]Post, 0)
-	for rows.Next() {
-		var post Post
-		rows.Scan(&post.Id, &post.Title, &post.Content, &post.PublishedAt, &post.CName, &post.CEnName, &post.CommentCount, &post.Abstract, &post.Content)
-		if post.Abstract == "" {
-			if len([]rune(post.Content)) > 250 {
-				post.Abstract = helpers.TrimHtmlTag(string([]rune(post.Content)[:250]))
-			} else {
-				post.Abstract = helpers.TrimHtmlTag(string([]rune(post.Content)))
-			}
-
-		}
-		posts = append(posts, post)
-	}
-	// 获取文章总数
-	var total int
-	if category != "" {
-		err = db.QueryRow(countSql, category).Scan(&total)
-	} else {
-		err = db.QueryRow(countSql).Scan(&total)
-	}
-
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	return posts, total
-}
 
 func Archive(tag string, t string) (map[string][]Post, int) {
 	db := sl.MysqlClient
@@ -172,24 +86,6 @@ func GetSettings() map[string]string {
 		settingsMap[setting.Key] = setting.Value
 	}
 	return settingsMap
-}
-
-// 获取所有栏目
-func GetCategories() []Category {
-	db := sl.MysqlClient
-	rowsSql := fmt.Sprintf("select `c`.`id`, `c`.`name`, `c`.`description`, `c`.`en_name`, `p`.`count` as post_count from `%s` as `c` left join (select cat_id,count(*) as count from `%s` where status = ? group by cat_id) as `p` on `c`.`id` = `p`.`cat_id` where `c`.status = 1 order by `c`.`id` asc;", categoryTable, postTable)
-	rows, err := db.Query(rowsSql, 1)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
-	categories := make([]Category, 0)
-	for rows.Next() {
-		category := Category{}
-		rows.Scan(&category.Id, &category.Name, &category.Description, &category.EnName, &category.PostCount)
-		categories = append(categories, category)
-	}
-	return categories
 }
 
 // 获取所有tag
@@ -243,33 +139,6 @@ func GetFriends() []Friends {
 	return friends
 }
 
-// 获取单篇文章
-func GetPost(id int) Post {
-	db := sl.MysqlClient
-	rowsSql := fmt.Sprintf("select `t`.`name` as `tag_name`,`p`.`id`,`p`.`title`,`p`.`content`,`p`.`published_at`,`p`.`comments_count`,`c`.`name`,`c`.`en_name`,`p`.`Abstract` from `%s` as `p` left join `%s` as `c` on `p`.`cat_id` = `c`.`id` left join `%s` as `pt` on `p`.`id` = `pt`.`post_id` left join `%s` as `t` on `t`.`id` = `pt`.`tag_id` where `p`.`id` = ?", postTable, categoryTable, postTagTable, tagTable)
-	rows, err := db.Query(rowsSql, id)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
-	post := Post{}
-	for rows.Next() {
-		var tag Tag
-		rows.Scan(&post.TagName, &post.Id, &post.Title, &post.Content, &post.PublishedAt, &post.CommentCount, &post.CName, &post.CEnName, &post.Abstract)
-		if post.Abstract == "" {
-			if len([]rune(post.Content)) > 250 {
-				post.Abstract = helpers.TrimHtmlTag(string([]rune(post.Content)[:250]))
-			} else {
-				post.Abstract = helpers.TrimHtmlTag(string([]rune(post.Content)))
-			}
-
-		}
-		tag.Name = post.TagName
-		post.Tags = append(post.Tags, tag)
-	}
-
-	return post
-}
 
 // 获取所有文章的id
 func GetAllPostId() []string {

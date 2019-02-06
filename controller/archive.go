@@ -3,7 +3,7 @@ package controller
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/irellik/gblog/model"
+	"gblog/model"
 	"net/http"
 	"sort"
 )

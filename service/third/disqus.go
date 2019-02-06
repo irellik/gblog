@@ -2,10 +2,8 @@ package third
 
 import (
 	"encoding/json"
-	"fmt"
-	"github.com/irellik/gblog/helpers"
-	"github.com/irellik/gblog/model"
-	"log"
+	"gblog/helpers"
+	"gblog/model"
 	"regexp"
 	"strconv"
 	"strings"
@@ -21,7 +19,7 @@ func UpdateCommentCount() {
 	for {
 		defer func() {
 			if err := recover(); err != nil {
-				fmt.Println(err)
+				//fmt.Println(err)
 			}
 		}()
 		idList := model.GetAllPostId()
@@ -40,7 +38,7 @@ func UpdateCommentCount() {
 			commentCountUrl := "http://iwww.disqus.com/count-data.js?1=" + paramStr + ".html"
 			response, err := helpers.HttpGet(commentCountUrl)
 			if err != nil {
-				log.Println(err)
+				//log.Println(err)
 				time.Sleep(time.Second * 5)
 				continue
 			}

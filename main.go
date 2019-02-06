@@ -8,15 +8,14 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
-	"github.com/irellik/gblog/controller"
-	"github.com/irellik/gblog/controller/admin"
-	"github.com/irellik/gblog/helpers"
-	sl "github.com/irellik/gblog/service/local"
-	st "github.com/irellik/gblog/service/third"
+	"gblog/controller"
+	"gblog/controller/admin"
+	"gblog/helpers"
+	sl "gblog/service/local"
 	"html/template"
-	"net/http"
 	"os"
 	"path/filepath"
+	"gblog/middleware"
 )
 
 var command string
@@ -26,32 +25,39 @@ func init() {
 }
 
 func main() {
+	// 加载全局配置
+	globalConfig := sl.LoadConfig()
+	// 连接MySQL
+	sl.MysqlInit()
+
 	flag.Parse()
 	if command == "set:admin" {
 		password, err := model.SetAdmin()
 		if err != nil {
 			fmt.Println(err)
 		} else {
-			fmt.Printf("管理员已经设置，账号是admin,密码是%s", password)
+			fmt.Printf("管理员已经设置，账号是admin,密码是%s\n", password)
 		}
 		os.Exit(0)
 	}
-	// 加载全局配置
-	sl.LoadConfig()
-	globalConfig := sl.GetConfig()
-	// 连接MySQL
-	sl.MysqlInit()
+
 	//var LayoutView = filepath.Join(getCurrentPath(), "./views/layout.html")
 	// Disable Console Color
 	// gin.DisableConsoleColor()
 
 	// 更新评论
-	go st.UpdateCommentCount()
+	//go st.UpdateCommentCount()
 	// Creates a gin router with default middleware:
 	// logger and recovery (crash-free) middleware
 	router := gin.Default()
+
+	//// session
+	store := cookie.NewStore([]byte(globalConfig.AppKey))
+	router.Use(sessions.Sessions("g_session", store))
+
 	// 静态文件
 	router.Static("/static", "./static")
+	router.Static("/admin", "./static/html/admin")
 	// 定义模板位置
 	loadView(router)
 	router.GET("/", controller.Index)
@@ -63,29 +69,23 @@ func main() {
 	router.GET("/post/:id", controller.Article)
 	router.GET("/search/:keyword", controller.Search)
 
-	router_admin := router.Group("/admin")
-	//// session
-	store := cookie.NewStore([]byte("secret"))
-	router_admin.Use(sessions.Sessions("my_session", store))
-	router_admin.Use(authMiddleware)
+	router_admin := router.Group("/api")
+
+	router_admin.Use(middleware.AuthMiddleware)
 
 	{
 		router_admin.GET("/", admin.Index)
+		router_admin.GET("/category", admin.CategoryList)
+		router_admin.POST("/article", admin.ArticleStore)
+		router_admin.DELETE("/article", admin.ArticleDelete)
+		router_admin.GET("/article", admin.ArticleList)
+		router_admin.GET("/article/:id", admin.ArticleDetail)
 	}
 	router.GET("/login", admin2.LoginView)
-	router.POST("/login", admin2.Login)
+	router.POST("/api/login", admin2.Login)
 	// By default it serves on :8080 unless a
 	// PORT environment variable was defined.
 	router.Run(globalConfig.Site.Address)
-}
-
-func authMiddleware(c *gin.Context) {
-	session := sessions.Default(c)
-	user_info := session.Get("user_info")
-	if user_info == nil {
-		c.Redirect(http.StatusFound, "/login")
-	}
-	c.Next()
 }
 
 func loadView(engine *gin.Engine) {

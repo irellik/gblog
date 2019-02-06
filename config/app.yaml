@@ -6,6 +6,9 @@ mysql:
   database: blog
 site:
   pageSize: 10
-  address: :8080
+  address: :8000
   remember_days: 30
+  domain: blog.iwww.me
+session:
+  maxAge: 3600
 appKey: T1SDu7fxVR6PogZ1TCr8Ou8FlCWGYvWD

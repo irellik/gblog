@@ -30,7 +30,12 @@ type Config struct {
 	Site struct {
 		PageSize int    `yaml:"pageSize"`
 		Address  string `yaml:"address"`
+		RememberDays int `yaml:"remember_days"`
+		Domain string `yaml:"domain"`
 	} `yaml:"site"`
+	Session struct{
+		MaxAge int `yaml:"maxAge"`
+	}`yaml:"session"`
 	AppKey string `yaml:"appKey"`
 }
 
@@ -41,7 +46,7 @@ func init() {
 }
 
 // 载入配置文件
-func LoadConfig() {
+func LoadConfig() Config{
 	currentPath := GetCurrentPath()
 	confFile := flag.String("config", fmt.Sprintf("%s/config/app.yaml", currentPath), "配置文件")
 	flag.Parse()
@@ -63,6 +68,7 @@ func LoadConfig() {
 		// 重写配置文件
 		ioutil.WriteFile(*confFile, yamlText, 0644)
 	}
+	return globalConfig
 }
 
 // 获取配置

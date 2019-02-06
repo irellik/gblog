@@ -15,3 +15,5 @@
 /log/
 /vendor/*
 !/vendor/vendor.json
+gblog
+.DS_Store

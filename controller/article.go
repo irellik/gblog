@@ -3,9 +3,9 @@ package controller
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/irellik/gblog/helpers"
-	"github.com/irellik/gblog/model"
-	sl "github.com/irellik/gblog/service/local"
+	"gblog/helpers"
+	"gblog/model"
+	sl "gblog/service/local"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -21,8 +21,8 @@ func Article(c *gin.Context) {
 		return
 	}
 	// 获取文章内容
-	post := model.GetPost(postId)
-	if post.Id == 0 {
+	post,err := model.GetPost(postId, true)
+	if err != nil{
 		Throw404(c)
 		return
 	}
@@ -31,7 +31,7 @@ func Article(c *gin.Context) {
 	// 获取页码
 	page := sl.GetPage(c)
 	offset := (page - 1) * config.Site.PageSize
-	_, total := model.GetPosts("", offset, config.Site.PageSize, false)
+	_, total := model.GetPosts(offset, config.Site.PageSize)
 	settings := model.GetSettings()
 	tagList := make([]string, 0)
 	for _, keywordStruct := range post.Tags {
@@ -56,7 +56,7 @@ func Search(c *gin.Context) {
 	// 获取页码
 	page := sl.GetPage(c)
 	offset := (page - 1) * config.Site.PageSize
-	postList, total := model.GetPosts(c.Param("keyword"), offset, config.Site.PageSize, true)
+	postList, total := model.SearchPosts(c.Param("keyword"), offset, config.Site.PageSize)
 	totalPage := total/config.Site.PageSize + 1
 	pagination := helpers.MakePagination(c.Request, total, config.Site.PageSize).Paginate()
 	tags := model.GetTags()
