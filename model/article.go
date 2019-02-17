@@ -273,5 +273,5 @@ func UpdatePost(aid int, article_form ArticleForm, uid int64) error {
 		}
 	}
 	// 删除不再使用的tag
-
+	return nil
 }

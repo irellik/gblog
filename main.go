@@ -3,19 +3,19 @@ package main
 import (
 	"flag"
 	"fmt"
+	"gblog/controller"
+	"gblog/controller/admin"
 	admin2 "gblog/controller/admin"
+	"gblog/helpers"
+	"gblog/middleware"
 	"gblog/model"
+	sl "gblog/service/local"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
-	"gblog/controller"
-	"gblog/controller/admin"
-	"gblog/helpers"
-	sl "gblog/service/local"
 	"html/template"
 	"os"
 	"path/filepath"
-	"gblog/middleware"
 )
 
 var command string
@@ -80,6 +80,7 @@ func main() {
 		router_admin.DELETE("/article", admin.ArticleDelete)
 		router_admin.GET("/article", admin.ArticleList)
 		router_admin.GET("/article/:id", admin.ArticleDetail)
+		router_admin.PUT("/article/:id", admin.ArticleDetail)
 	}
 	router.GET("/login", admin2.LoginView)
 	router.POST("/api/login", admin2.Login)
