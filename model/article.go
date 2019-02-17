@@ -1,23 +1,24 @@
 package model
 
 import (
-	"html/template"
-	"time"
-	"fmt"
 	"database/sql"
+	"fmt"
 	"gblog/helpers"
 	sl "gblog/service/local"
+	"html/template"
+	"strconv"
 	"strings"
+	"time"
 )
 
 type ArticleForm struct {
-	Title string `json:"title" form:"title" binding:"required"`
-	CategoryId string `json:"category_id" form:"category" binding:"required,gt=0"`
-	Content string `json:"content" form:"content"`
-	PublishedAt string `json:"published_at" form:"published_at"`
-	Summary string `json:"summary" form:"summary"`
-	Tags []string `json:"tags" form:"tags[]"`
-	Status string `json:"status" form:"status"`
+	Title       string   `json:"title" form:"title" binding:"required"`
+	CategoryId  string   `json:"category_id" form:"category" binding:"required,gt=0"`
+	Content     string   `json:"content" form:"content"`
+	PublishedAt string   `json:"published_at" form:"published_at"`
+	Summary     string   `json:"summary" form:"summary"`
+	Tags        []string `json:"tags" form:"tags[]"`
+	Status      string   `json:"status" form:"status"`
 }
 
 //文章
@@ -26,7 +27,7 @@ type Post struct {
 	Title        string `json:"title" form:"title"`
 	Content      string `json:"content" form:"content"`
 	ContentHtml  template.HTML
-	Status       int      `json:"status" form:"status"`
+	Status       int       `json:"status" form:"status"`
 	AuthorId     int       `json:"author_id" form:"author_id"`
 	CatId        int       `json:"cat_id" form:"cat_id"`
 	PublishedAt  time.Time `json:"published_at" form:"published_at"`
@@ -41,6 +42,11 @@ type Post struct {
 	Tags         []Tag     `json:"tag"`
 }
 
+type tagSt struct {
+	Id   int8   `json:"id"`
+	Name string `json:"name"`
+}
+
 // 获取文章列表
 func GetPosts(offset int, limit int) ([]Post, int) {
 	posts := make([]Post, 0)
@@ -53,7 +59,7 @@ func GetPosts(offset int, limit int) ([]Post, int) {
 	defer rows.Close()
 	for rows.Next() {
 		var post Post
-		rows.Scan(&post.Id, &post.Title, &post.Content, &post.Status, &post.PublishedAt,&post.CatId, &post.CName, &post.CEnName, &post.CommentCount, &post.Abstract, &post.Content, &post.CreatedAt)
+		rows.Scan(&post.Id, &post.Title, &post.Content, &post.Status, &post.PublishedAt, &post.CatId, &post.CName, &post.CEnName, &post.CommentCount, &post.Abstract, &post.Content, &post.CreatedAt)
 		if post.Abstract == "" {
 			if len([]rune(post.Content)) > 250 {
 				post.Abstract = helpers.TrimHtmlTag(string([]rune(post.Content)[:250]))
@@ -68,14 +74,14 @@ func GetPosts(offset int, limit int) ([]Post, int) {
 	var total int
 	err = db.QueryRow(countSql).Scan(&total)
 	if err != nil {
-		return posts,0
+		return posts, 0
 	}
 
 	return posts, total
 }
 
 // 搜索文章
-func SearchPosts(keyword string, offset int, limit int)([]Post, int){
+func SearchPosts(keyword string, offset int, limit int) ([]Post, int) {
 	posts := make([]Post, 0)
 	db := sl.MysqlClient
 	rowsSql := fmt.Sprintf("select p.id,p.title,p.content,p.published_at,c.name,c.en_name,p.comments_count,p.abstract,p.content,p.created_at from %s as p left join %s as c on p.cat_id = c.id where (p.content like ? or p.title like ? ) and p.status = 1 order by p.id desc limit %d,%d", postTable, categoryTable, offset, limit)
@@ -84,9 +90,9 @@ func SearchPosts(keyword string, offset int, limit int)([]Post, int){
 	rows, err := db.Query(rowsSql, keyword, keyword)
 	defer rows.Close()
 	if err != nil {
-		return posts,0
+		return posts, 0
 	}
-	for rows.Next(){
+	for rows.Next() {
 		var post Post
 		rows.Scan(&post.Id, &post.Title, &post.Content, &post.PublishedAt, &post.CName, &post.CEnName, &post.CommentCount, &post.Abstract, &post.Content, &post.CreatedAt)
 		if post.Abstract == "" {
@@ -101,45 +107,38 @@ func SearchPosts(keyword string, offset int, limit int)([]Post, int){
 	}
 	// 获取文章总数
 	var total int
-	err = db.QueryRow(countSql,keyword,keyword).Scan(total)
+	err = db.QueryRow(countSql, keyword, keyword).Scan(total)
 	if err != nil {
-		return posts,0
+		return posts, 0
 	}
 	return posts, total
 }
 
-
-
 // 插入文章
-func InsertPost(article_form ArticleForm, uid int64) (int64, error){
+func InsertPost(article_form ArticleForm, uid int64) (int64, error) {
 	// tag
 	db := sl.MysqlClient
-	type tagSt struct {
-		Id	int8 `json:"id"`
-		Name string `json:"name"`
-	}
 	// 插入tag
 	tagIdList := make([]int64, 0)
 	if len(article_form.Tags) > 0 {
-
-		for _,tag := range article_form.Tags{
+		for _, tag := range article_form.Tags {
 			var tagId int64
 			tagSql := fmt.Sprintf("select id from `%s` where `name` = ?", tagTable)
 			errTagQuery := db.QueryRow(tagSql, tag).Scan(&tagId)
 			switch {
-				case errTagQuery == sql.ErrNoRows:
-					// 不存在则插入
-					tagInsertSql := fmt.Sprintf("insert into `%s` (`name`) values (?)", tagTable)
-					res, err := db.Exec(tagInsertSql, tag)
-					if err != nil{
-						return 0,err
-					}
-					tagId,err = res.LastInsertId()
-					if err != nil{
-						return 0,err
-					}
-				case errTagQuery != nil:
-					return 0,errTagQuery
+			case errTagQuery == sql.ErrNoRows:
+				// 不存在则插入
+				tagInsertSql := fmt.Sprintf("insert into `%s` (`name`) values (?)", tagTable)
+				res, err := db.Exec(tagInsertSql, tag)
+				if err != nil {
+					return 0, err
+				}
+				tagId, err = res.LastInsertId()
+				if err != nil {
+					return 0, err
+				}
+			case errTagQuery != nil:
+				return 0, errTagQuery
 			}
 			tagIdList = append(tagIdList, tagId)
 		}
@@ -147,30 +146,30 @@ func InsertPost(article_form ArticleForm, uid int64) (int64, error){
 	}
 	// 插入文章和关联tag
 	insertArticleSql := fmt.Sprintf("insert into `%s` (`title`, `content`,`status`,`author_id`,`cat_id`,`published_at`,`abstract`) values (?,?,?,?,?,?,?)", postTable)
-	res,err := db.Exec(insertArticleSql, article_form.Title, article_form.Content,article_form.Status,uid,article_form.CategoryId,article_form.PublishedAt,article_form.Summary)
+	res, err := db.Exec(insertArticleSql, article_form.Title, article_form.Content, article_form.Status, uid, article_form.CategoryId, article_form.PublishedAt, article_form.Summary)
 	if err != nil {
-		return 0,err
+		return 0, err
 	}
-	articleId,errArticleLastId := res.LastInsertId()
+	articleId, errArticleLastId := res.LastInsertId()
 	if errArticleLastId != nil {
-		return 0,err
+		return 0, err
 	}
 	// 关联文章和tag
 	tagRelation := make([]string, 0)
-	for _,tagId := range tagIdList{
+	for _, tagId := range tagIdList {
 		tagRelation = append(tagRelation, fmt.Sprintf("(%d,%d)", articleId, tagId))
 	}
 	tagRelationSql := fmt.Sprintf("replace into `%s` (`post_id`,`tag_id`) values %s", postTagTable, strings.Join(tagRelation, ","))
 	db.Exec(tagRelationSql)
-	return articleId,nil
+	return articleId, nil
 	//sql := "INSERT INTO `%s` (`title`,`content`,`category_id`,`published_at`,`summary`,``)"
 }
 
 // 删除文章
-func ArticleDelete(idList []string)bool{
+func ArticleDelete(idList []string) bool {
 	deleteSql := fmt.Sprintf("update `%s` set status = 3 where `id` in (?)", postTable)
 	db := sl.MysqlClient
-	_,err := db.Exec(deleteSql, strings.Join(idList, ","))
+	_, err := db.Exec(deleteSql, strings.Join(idList, ","))
 	if err != nil {
 		return false
 	}
@@ -178,23 +177,23 @@ func ArticleDelete(idList []string)bool{
 }
 
 // 获取单篇文章
-func GetPost(id int, filterStatus bool) (Post,error) {
+func GetPost(id int, filterStatus bool) (Post, error) {
 	post := Post{}
 	db := sl.MysqlClient
-	var statusList []int
+	var statusList []string
 	if filterStatus {
-		statusList = []int{
-			1,
+		statusList = []string{
+			"1",
 		}
-	}else{
-		statusList = []int{
-			1,2,3,
+	} else {
+		statusList = []string{
+			"1", "2", "3",
 		}
 	}
 	rowsSql := fmt.Sprintf("select `t`.`name` as `tag_name`,`p`.`id`,`p`.`title`,`p`.`content`,`p`.`status`,`p`.`published_at`,`p`.`comments_count`,`c`.`id` as `cat_id`, `c`.`name`,`c`.`en_name`,`p`.`Abstract` from `%s` as `p` left join `%s` as `c` on `p`.`cat_id` = `c`.`id` left join `%s` as `pt` on `p`.`id` = `pt`.`post_id` left join `%s` as `t` on `t`.`id` = `pt`.`tag_id` where `p`.`id` = ? and `p`.`status` in (?)", postTable, categoryTable, postTagTable, tagTable)
-	rows, err := db.Query(rowsSql, id, statusList)
+	rows, err := db.Query(rowsSql, id, strings.Join(statusList, ","))
 	if err != nil {
-		return post,err
+		return post, err
 	}
 	defer rows.Close()
 	for rows.Next() {
@@ -212,5 +211,67 @@ func GetPost(id int, filterStatus bool) (Post,error) {
 		post.Tags = append(post.Tags, tag)
 	}
 
-	return post,err
+	return post, err
+}
+
+func UpdatePost(aid int, article_form ArticleForm, uid int64) error {
+	// tag
+	db := sl.MysqlClient
+	// 获取该文章
+	post, err := GetPost(aid, false)
+	if err != nil {
+		return err
+	}
+	// 开始事务
+	tx, err := db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+	newTagMap := map[string]bool{}
+	for _, tag := range article_form.Tags {
+		newTagMap[tag] = true
+	}
+	// 待删除的tag
+	deleteTagIdList := make([]string, 0)
+	for _, tagSt := range post.Tags {
+		if ok := newTagMap[tagSt.Name]; !ok {
+			deleteTagIdList = append(deleteTagIdList, strconv.Itoa(tagSt.Id))
+		}
+	}
+	tx.Exec(fmt.Sprintf("DELETE FROM %s WHERE `post_id` = ? and `tag_id` IN (?)", postTagTable), aid, strings.Join(deleteTagIdList, ","))
+	// 删除的tag是否还有其他文章在用，如果没有则删除tag表
+	rows, err := tx.Query(fmt.Sprintf("SELECT `tag_id` FROM %s WHERE `tag_id` IN (?)", postTagTable), strings.Join(deleteTagIdList, ","))
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+
+	// 插入tag
+	tagIdList := make([]int64, 0)
+	if len(article_form.Tags) > 0 {
+		for _, tag := range article_form.Tags {
+			var tagId int64
+			tagSql := fmt.Sprintf("select id from `%s` where `name` = ?", tagTable)
+			errTagQuery := db.QueryRow(tagSql, tag).Scan(&tagId)
+			switch {
+			case errTagQuery == sql.ErrNoRows:
+				// 不存在则插入
+				tagInsertSql := fmt.Sprintf("insert into `%s` (`name`) values (?)", tagTable)
+				res, err := db.Exec(tagInsertSql, tag)
+				if err != nil {
+					return err
+				}
+				tagId, err = res.LastInsertId()
+				if err != nil {
+					return err
+				}
+			case errTagQuery != nil:
+				return errTagQuery
+			}
+			tagIdList = append(tagIdList, tagId)
+		}
+	}
+	// 删除不再使用的tag
+
 }
