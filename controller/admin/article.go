@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+// 创建文章
 func ArticleStore(c *gin.Context) {
 	session := sessions.Default(c)
 	user_info := session.Get("user_info")
@@ -43,12 +44,13 @@ func ArticleList(c *gin.Context) {
 	page := sl.GetPage(c)
 	offset := (page - 1) * config.Site.PageSize
 	pageSize := 20
+	status := c.Query("status")
 	// 是否需要搜索
 	keyword := c.Query("s")
 	var posts []model.Post
 	var total int
 	if keyword == "" {
-		posts, total = model.GetPosts(offset, pageSize)
+		posts, total = model.GetPosts(offset, pageSize, status)
 	} else {
 		posts, total = model.SearchPosts(keyword, offset, pageSize)
 	}
@@ -73,7 +75,7 @@ func ArticleDelete(c *gin.Context) {
 	idList := c.QueryArray("id_list[]")
 	res := false
 	if len(idList) > 0 {
-		res = model.ArticleDelete(idList)
+		res = model.DeletePost(idList)
 	}
 	if res {
 		helpers.Success(c, nil)
@@ -103,7 +105,7 @@ func ArticleDetail(c *gin.Context) {
 			"title":        post.Title,
 			"content":      post.Content,
 			"status":       post.Status,
-			"cat_id":       post.CatId,
+			"category":     post.CatId,
 			"published_at": post.PublishedAt.Unix(),
 			"abstract":     post.Abstract,
 			"tags":         post.Tags,
@@ -112,5 +114,32 @@ func ArticleDetail(c *gin.Context) {
 }
 
 func ArticleUpdate(c *gin.Context) {
+	id := c.Param("id")
+	idInt, err := strconv.Atoi(id)
+	if err != nil {
+		helpers.Failed(c, http.StatusNotFound, "Not Found")
+		return
+	}
+	_, err = model.GetPost(idInt, false)
+	if err != nil {
+		helpers.Failed(c, http.StatusNotFound, "Not Found")
+		return
+	}
 
+	var article_form model.ArticleForm
+	if err := c.ShouldBind(&article_form); err != nil {
+		helpers.Failed(c, http.StatusBadRequest, err.Error())
+		return
+	}
+	// 时间格式化
+	if article_form.PublishedAt == "" {
+		article_form.PublishedAt = time.Now().Format("2006-01-02 15:04:05")
+	}
+	// 更新
+	err = model.UpdatePost(idInt, article_form)
+	if err != nil {
+		helpers.Failed(c, http.StatusInternalServerError, "Internal Server Error")
+		return
+	}
+	helpers.Success(c, nil)
 }

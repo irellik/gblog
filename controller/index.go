@@ -1,10 +1,10 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
 	"gblog/helpers"
 	"gblog/model"
 	sl "gblog/service/local"
+	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
@@ -14,7 +14,7 @@ func Index(c *gin.Context) {
 	// 获取页码
 	page := sl.GetPage(c)
 	offset := (page - 1) * config.Site.PageSize
-	postList, total := model.GetPosts(offset, config.Site.PageSize)
+	postList, total := model.GetPosts(offset, config.Site.PageSize, "1")
 
 	pagination := helpers.MakePagination(c.Request, total, config.Site.PageSize).Paginate()
 	tags := model.GetTags()

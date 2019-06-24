@@ -2,10 +2,10 @@ package controller
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"gblog/helpers"
 	"gblog/model"
 	sl "gblog/service/local"
+	"github.com/gin-gonic/gin"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -21,8 +21,8 @@ func Article(c *gin.Context) {
 		return
 	}
 	// 获取文章内容
-	post,err := model.GetPost(postId, true)
-	if err != nil{
+	post, err := model.GetPost(postId, true)
+	if err != nil {
 		Throw404(c)
 		return
 	}
@@ -31,7 +31,7 @@ func Article(c *gin.Context) {
 	// 获取页码
 	page := sl.GetPage(c)
 	offset := (page - 1) * config.Site.PageSize
-	_, total := model.GetPosts(offset, config.Site.PageSize)
+	_, total := model.GetPosts(offset, config.Site.PageSize, "1")
 	settings := model.GetSettings()
 	tagList := make([]string, 0)
 	for _, keywordStruct := range post.Tags {

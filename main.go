@@ -80,7 +80,7 @@ func main() {
 		router_admin.DELETE("/article", admin.ArticleDelete)
 		router_admin.GET("/article", admin.ArticleList)
 		router_admin.GET("/article/:id", admin.ArticleDetail)
-		router_admin.PUT("/article/:id", admin.ArticleDetail)
+		router_admin.PUT("/article/:id", admin.ArticleUpdate)
 	}
 	router.GET("/login", admin2.LoginView)
 	router.POST("/api/login", admin2.Login)

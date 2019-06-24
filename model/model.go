@@ -9,12 +9,11 @@ import (
 	"strings"
 )
 
-
 type Tag struct {
-	Id        int    `json:"id" form:"id"`
-	Name      string `json:"name" form:"name"`
-	PostCount int    `json:"post_count"`
-	WeightCss int    `json:"weight_css"`
+	Id        sql.NullInt64 `json:"id" form:"id"`
+	Name      string        `json:"name" form:"name"`
+	PostCount int           `json:"post_count"`
+	WeightCss int           `json:"weight_css"`
 }
 
 // 站点配置
@@ -35,7 +34,6 @@ var settingTable string = "settings"
 var tagTable string = "tags"
 var friendsTable string = "friends"
 var postTagTable string = "post_tag"
-
 
 func Archive(tag string, t string) (map[string][]Post, int) {
 	db := sl.MysqlClient
@@ -138,7 +136,6 @@ func GetFriends() []Friends {
 	}
 	return friends
 }
-
 
 // 获取所有文章的id
 func GetAllPostId() []string {
