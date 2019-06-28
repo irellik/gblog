@@ -1,9 +1,9 @@
 package admin
 
 import (
-	"gblog/helpers"
 	"gblog/model"
 	sl "gblog/service/local"
+	"gblog/utils"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -18,7 +18,7 @@ func ArticleStore(c *gin.Context) {
 	u_info := user_info.(map[string]string)
 	var article_form model.ArticleForm
 	if err := c.ShouldBind(&article_form); err != nil {
-		helpers.Failed(c, http.StatusBadRequest, err.Error())
+		utils.Failed(c, http.StatusBadRequest, err.Error(), nil)
 		return
 	}
 	// 时间格式化
@@ -29,13 +29,13 @@ func ArticleStore(c *gin.Context) {
 	uid, _ := strconv.Atoi(u_info["uid"])
 	articleId, err := model.InsertPost(article_form, int64(uid))
 	if err != nil {
-		helpers.Failed(c, http.StatusInternalServerError, "保存失败")
+		utils.Failed(c, http.StatusInternalServerError, "保存失败", nil)
 		return
 	}
 	response := map[string]int64{
 		"article_id": articleId,
 	}
-	helpers.Success(c, response)
+	utils.Success(c, response)
 }
 
 // 文章列表
@@ -67,7 +67,7 @@ func ArticleList(c *gin.Context) {
 		"posts": responsePosts,
 		"total": total,
 	}
-	helpers.Success(c, data)
+	utils.Success(c, data)
 }
 
 // 删除文章
@@ -78,9 +78,9 @@ func ArticleDelete(c *gin.Context) {
 		res = model.DeletePost(idList)
 	}
 	if res {
-		helpers.Success(c, nil)
+		utils.Success(c, nil)
 	} else {
-		helpers.Failed(c, http.StatusInternalServerError, "failed")
+		utils.Failed(c, http.StatusInternalServerError, "failed", nil)
 	}
 }
 
@@ -91,15 +91,15 @@ func ArticleDetail(c *gin.Context) {
 	id := c.Param("id")
 	idInt, err := strconv.Atoi(id)
 	if err != nil {
-		helpers.Failed(c, http.StatusNotFound, "Not Found")
+		utils.Failed(c, http.StatusNotFound, "Not Found", nil)
 		return
 	}
 	post, err := model.GetPost(idInt, false)
 	if err != nil {
-		helpers.Failed(c, http.StatusNotFound, "Not Found")
+		utils.Failed(c, http.StatusNotFound, "Not Found", nil)
 		return
 	}
-	helpers.Success(c, map[string]interface{}{
+	utils.Success(c, map[string]interface{}{
 		"post": map[string]interface{}{
 			"id":           post.Id,
 			"title":        post.Title,
@@ -117,18 +117,18 @@ func ArticleUpdate(c *gin.Context) {
 	id := c.Param("id")
 	idInt, err := strconv.Atoi(id)
 	if err != nil {
-		helpers.Failed(c, http.StatusNotFound, "Not Found")
+		utils.Failed(c, http.StatusNotFound, "Not Found", nil)
 		return
 	}
 	_, err = model.GetPost(idInt, false)
 	if err != nil {
-		helpers.Failed(c, http.StatusNotFound, "Not Found")
+		utils.Failed(c, http.StatusNotFound, "Not Found", nil)
 		return
 	}
 
 	var article_form model.ArticleForm
 	if err := c.ShouldBind(&article_form); err != nil {
-		helpers.Failed(c, http.StatusBadRequest, err.Error())
+		utils.Failed(c, http.StatusBadRequest, err.Error(), nil)
 		return
 	}
 	// 时间格式化
@@ -138,8 +138,8 @@ func ArticleUpdate(c *gin.Context) {
 	// 更新
 	err = model.UpdatePost(idInt, article_form)
 	if err != nil {
-		helpers.Failed(c, http.StatusInternalServerError, "Internal Server Error")
+		utils.Failed(c, http.StatusInternalServerError, "Internal Server Error", nil)
 		return
 	}
-	helpers.Success(c, nil)
+	utils.Success(c, nil)
 }

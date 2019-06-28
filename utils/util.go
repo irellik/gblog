@@ -1,4 +1,4 @@
-package helpers
+package utils
 
 import (
 	"github.com/gin-gonic/gin"
@@ -71,12 +71,21 @@ func Success(c *gin.Context, data interface{}) {
 	c.Abort()
 }
 
-func Failed(c *gin.Context, status_code int, message string) {
-	c.JSON(status_code, gin.H{
-		"code":    status_code,
-		"status":  "failed",
-		"message": message,
-	})
+func Failed(c *gin.Context, status_code int, message string, data interface{}) {
+	if data != nil {
+		c.JSON(status_code, gin.H{
+			"code":    status_code,
+			"status":  "failed",
+			"message": message,
+			"data":    data,
+		})
+	} else {
+		c.JSON(status_code, gin.H{
+			"code":    status_code,
+			"status":  "failed",
+			"message": message,
+		})
+	}
 	c.Abort()
 }
 

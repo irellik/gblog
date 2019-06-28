@@ -3,8 +3,8 @@ package model
 import (
 	"database/sql"
 	"fmt"
-	"gblog/helpers"
 	sl "gblog/service/local"
+	"gblog/utils"
 	"html/template"
 	"strconv"
 	"strings"
@@ -73,9 +73,9 @@ func GetPosts(offset int, limit int, status string) ([]Post, int) {
 		rows.Scan(&post.Id, &post.Title, &post.Content, &post.Status, &post.PublishedAt, &post.CatId, &post.CName, &post.CEnName, &post.CommentCount, &post.Abstract, &post.Content, &post.CreatedAt)
 		if post.Abstract == "" {
 			if len([]rune(post.Content)) > 250 {
-				post.Abstract = helpers.TrimHtmlTag(string([]rune(post.Content)[:250]))
+				post.Abstract = utils.TrimHtmlTag(string([]rune(post.Content)[:250]))
 			} else {
-				post.Abstract = helpers.TrimHtmlTag(string([]rune(post.Content)))
+				post.Abstract = utils.TrimHtmlTag(string([]rune(post.Content)))
 			}
 
 		}
@@ -108,9 +108,9 @@ func SearchPosts(keyword string, offset int, limit int) ([]Post, int) {
 		rows.Scan(&post.Id, &post.Title, &post.Content, &post.PublishedAt, &post.CName, &post.CEnName, &post.CommentCount, &post.Abstract, &post.Content, &post.CreatedAt)
 		if post.Abstract == "" {
 			if len([]rune(post.Content)) > 250 {
-				post.Abstract = helpers.TrimHtmlTag(string([]rune(post.Content)[:250]))
+				post.Abstract = utils.TrimHtmlTag(string([]rune(post.Content)[:250]))
 			} else {
-				post.Abstract = helpers.TrimHtmlTag(string([]rune(post.Content)))
+				post.Abstract = utils.TrimHtmlTag(string([]rune(post.Content)))
 			}
 
 		}
@@ -216,9 +216,9 @@ func GetPost(id int, filterStatus bool) (Post, error) {
 		}
 		if post.Abstract == "" {
 			if len([]rune(post.Content)) > 250 {
-				post.Abstract = helpers.TrimHtmlTag(string([]rune(post.Content)[:250]))
+				post.Abstract = utils.TrimHtmlTag(string([]rune(post.Content)[:250]))
 			} else {
-				post.Abstract = helpers.TrimHtmlTag(string([]rune(post.Content)))
+				post.Abstract = utils.TrimHtmlTag(string([]rune(post.Content)))
 			}
 
 		}

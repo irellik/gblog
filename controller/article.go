@@ -2,9 +2,9 @@ package controller
 
 import (
 	"fmt"
-	"gblog/helpers"
 	"gblog/model"
 	sl "gblog/service/local"
+	"gblog/utils"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"net/http"
@@ -58,7 +58,7 @@ func Search(c *gin.Context) {
 	offset := (page - 1) * config.Site.PageSize
 	postList, total := model.SearchPosts(c.Param("keyword"), offset, config.Site.PageSize)
 	totalPage := total/config.Site.PageSize + 1
-	pagination := helpers.MakePagination(c.Request, total, config.Site.PageSize).Paginate()
+	pagination := utils.MakePagination(c.Request, total, config.Site.PageSize).Paginate()
 	tags := model.GetTags()
 	friends := model.GetFriends()
 	c.HTML(http.StatusOK, "index/index.html", gin.H{

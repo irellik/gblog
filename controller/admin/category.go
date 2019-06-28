@@ -2,13 +2,13 @@ package admin
 
 import (
 	"gblog/model"
-	"gblog/helpers"
+	"gblog/utils"
 	"github.com/gin-gonic/gin"
 )
 
-func CategoryList(c *gin.Context){
+func CategoryList(c *gin.Context) {
 	categories := model.GetCategories()
 	data := make(map[string]interface{})
 	data["categories"] = categories
-	helpers.Success(c, data)
+	utils.Success(c, data)
 }

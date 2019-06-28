@@ -2,8 +2,8 @@ package third
 
 import (
 	"encoding/json"
-	"gblog/helpers"
 	"gblog/model"
+	"gblog/utils"
 	"regexp"
 	"strconv"
 	"strings"
@@ -36,7 +36,7 @@ func UpdateCommentCount() {
 		for _, arr := range jobList {
 			paramStr += strings.Join(arr, ".html&1=")
 			commentCountUrl := "http://iwww.disqus.com/count-data.js?1=" + paramStr + ".html"
-			response, err := helpers.HttpGet(commentCountUrl)
+			response, err := utils.HttpGet(commentCountUrl)
 			if err != nil {
 				//log.Println(err)
 				time.Sleep(time.Second * 5)

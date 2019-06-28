@@ -6,10 +6,10 @@ import (
 	"gblog/controller"
 	"gblog/controller/admin"
 	admin2 "gblog/controller/admin"
-	"gblog/helpers"
 	"gblog/middleware"
 	"gblog/model"
 	sl "gblog/service/local"
+	"gblog/utils"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
@@ -91,11 +91,11 @@ func main() {
 
 func loadView(engine *gin.Engine) {
 	funcMap := template.FuncMap{
-		"toDate":      helpers.TimeToDateStr,
-		"timeFormat":  helpers.TimeFormat,
-		"mathPlus":    helpers.MathPlus,
-		"mathReduce":  helpers.MathReduce,
-		"intToString": helpers.IntToString,
+		"toDate":      utils.TimeToDateStr,
+		"timeFormat":  utils.TimeFormat,
+		"mathPlus":    utils.MathPlus,
+		"mathReduce":  utils.MathReduce,
+		"intToString": utils.IntToString,
 	}
 	engine.SetFuncMap(funcMap)
 	engine.LoadHTMLGlob(filepath.Join(sl.GetCurrentPath(), "./views/**/*"))

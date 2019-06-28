@@ -28,14 +28,18 @@ type Config struct {
 		Database string `yaml:"database"`
 	} `yaml:"mysql"`
 	Site struct {
-		PageSize int    `yaml:"pageSize"`
-		Address  string `yaml:"address"`
-		RememberDays int `yaml:"remember_days"`
-		Domain string `yaml:"domain"`
+		PageSize     int    `yaml:"pageSize"`
+		Address      string `yaml:"address"`
+		RememberDays int    `yaml:"remember_days"`
+		Domain       string `yaml:"domain"`
 	} `yaml:"site"`
-	Session struct{
+	Recaptcha struct {
+		Secret string  `yaml:"secret"`
+		Score  float64 `yaml:"score"`
+	}
+	Session struct {
 		MaxAge int `yaml:"maxAge"`
-	}`yaml:"session"`
+	} `yaml:"session"`
 	AppKey string `yaml:"appKey"`
 }
 
@@ -46,7 +50,7 @@ func init() {
 }
 
 // 载入配置文件
-func LoadConfig() Config{
+func LoadConfig() Config {
 	currentPath := GetCurrentPath()
 	confFile := flag.String("config", fmt.Sprintf("%s/config/app.yaml", currentPath), "配置文件")
 	flag.Parse()

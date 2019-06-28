@@ -1,23 +1,26 @@
 package admin
 
 import (
-	"gblog/model"
-	"github.com/gin-gonic/gin"
-	"net/http"
-	"github.com/gin-contrib/sessions"
-	"gblog/service/local"
-	"strconv"
-	"encoding/gob"
-	"gblog/helpers"
-	"encoding/json"
 	"encoding/base64"
+	"encoding/gob"
+	"encoding/json"
+	"gblog/model"
+	"gblog/service/local"
+	"gblog/utils"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
+	"github.com/skip2/go-qrcode"
+	"net/http"
+	"strconv"
 	"time"
 )
 
 type loginForm struct {
-	Username string `json:"username" xml:"username" form:"username" binding:"required,min=1"`
-	Password string `json:"password" xml:"password" form:"password" binding:"required,min=8"`
-	Remember string `json:"remember" xml:"remember" form:"remember" binding:"-"`
+	Username          string `json:"username" xml:"username" form:"username" binding:"required,min=1"`
+	Password          string `json:"password" xml:"password" form:"password" binding:"required,min=8"`
+	AuthenticatorCode string `json:"authenticator_code" xml:"authenticator_code" form:"authenticator_code" binding:"required,min=6,max=6"`
+	Token             string `json:"token" xml:"token" form:"token" binding:"required,min=1"`
+	Remember          string `json:"remember" xml:"remember" form:"remember" binding:"-"`
 }
 
 func Index(c *gin.Context) {
@@ -34,7 +37,31 @@ func Login(c *gin.Context) {
 	var lf loginForm
 	config := local.GetConfig()
 	if err := c.ShouldBind(&lf); err != nil {
-		helpers.Failed(c, http.StatusBadRequest, err.Error())
+		utils.Failed(c, http.StatusBadRequest, err.Error(), nil)
+		return
+	}
+	// 验证码检查
+	httpClient := utils.MakeHttpClient()
+	response, err := httpClient.HttpPost("https://www.google.com/recaptcha/api/siteverify", map[string]string{
+		"secret":   config.Recaptcha.Secret,
+		"response": lf.Token,
+		"remoteip": c.ClientIP(),
+	}, map[string]string{
+		"Content-Type": "application/x-www-form-urlencoded",
+	})
+	if err != nil {
+		utils.Failed(c, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+	var rcMap map[string]interface{}
+	err = json.Unmarshal(response, &rcMap)
+	if err != nil {
+		utils.Failed(c, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+	score := rcMap["score"].(float64)
+	if score < config.Recaptcha.Score {
+		utils.Failed(c, http.StatusForbidden, "403 Forbidden", nil)
 		return
 	}
 	var remember bool
@@ -43,9 +70,30 @@ func Login(c *gin.Context) {
 	} else {
 		remember = false
 	}
-	userDB, err := model.Auth(c.PostForm("username"), c.PostForm("password"), helpers.InetAton(c.ClientIP()))
+	userDB, err := model.Auth(lf.Username, lf.Password, lf.AuthenticatorCode, utils.InetAton(c.ClientIP()))
 	if err != nil {
-		helpers.Failed(c, http.StatusConflict, "incorrect username or password")
+		msg := err.Error()
+		if err == model.UserNotBindSecretError {
+			otpConf := &local.OTPConfig{
+				Secret: userDB.Secret,
+			}
+			siteName := model.GetSettings()["name"]
+			optUri := otpConf.ProvisionURIWithIssuer(userDB.Username, siteName)
+			png, err := qrcode.Encode(optUri, qrcode.Medium, 256)
+			if err != nil {
+				utils.Failed(c, http.StatusInternalServerError, msg, nil)
+				return
+			} else {
+				utils.Failed(c, 461, msg, map[string]string{
+					"qrImg": base64.StdEncoding.EncodeToString(png),
+				})
+				return
+			}
+		} else if err == model.UserSecretNotMatchError {
+			utils.Failed(c, http.StatusConflict, msg, nil)
+			return
+		}
+		utils.Failed(c, http.StatusConflict, msg, nil)
 		return
 	}
 	// 认证成功之后设置session和对应cookie
@@ -59,27 +107,27 @@ func Login(c *gin.Context) {
 	gob.Register(map[string]string{})
 	session.Set("user_info", user)
 	session.Options(sessions.Options{
-		MaxAge:config.Session.MaxAge,
-		HttpOnly:false,
-		Secure:false,
-		Domain:config.Site.Domain,
-		Path:"/",
+		MaxAge:   config.Session.MaxAge,
+		HttpOnly: false,
+		Secure:   false,
+		Domain:   config.Site.Domain,
+		Path:     "/",
 	})
 	session.Save()
 	if remember {
-		jsonUser,err := json.Marshal(user)
+		jsonUser, err := json.Marshal(user)
 		if err != nil {
-			helpers.Failed(c, http.StatusInternalServerError, "Internal Server Error")
+			utils.Failed(c, http.StatusInternalServerError, "Internal Server Error", nil)
 			return
 		}
-		cookieByte,err := local.Encrypt([]byte(jsonUser))
+		cookieByte, err := local.Encrypt([]byte(jsonUser))
 		if err != nil {
-			helpers.Failed(c, http.StatusInternalServerError, "Internal Server Error")
+			utils.Failed(c, http.StatusInternalServerError, "Internal Server Error", nil)
 			return
 		}
-		c.SetCookie("g_u", base64.StdEncoding.EncodeToString(cookieByte), config.Site.RememberDays * 24 * 60 * 60, "/", config.Site.Domain, false, false)
+		c.SetCookie("g_u", base64.StdEncoding.EncodeToString(cookieByte), config.Site.RememberDays*24*60*60, "/", config.Site.Domain, false, false)
 	}
 	data := make(map[string]map[string]string, 0)
 	data["user"] = user
-	helpers.Success(c, data)
+	utils.Success(c, data)
 }

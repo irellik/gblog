@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"gblog/helpers"
 	"gblog/model"
 	sl "gblog/service/local"
+	"gblog/utils"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -16,7 +16,7 @@ func Index(c *gin.Context) {
 	offset := (page - 1) * config.Site.PageSize
 	postList, total := model.GetPosts(offset, config.Site.PageSize, "1")
 
-	pagination := helpers.MakePagination(c.Request, total, config.Site.PageSize).Paginate()
+	pagination := utils.MakePagination(c.Request, total, config.Site.PageSize).Paginate()
 	tags := model.GetTags()
 	friends := model.GetFriends()
 	c.HTML(http.StatusOK, "index/index.html", gin.H{

@@ -11,4 +11,7 @@ site:
   domain: blog.iwww.me
 session:
   maxAge: 3600
+recaptcha:
+  secret: xxx
+  score: 0.5
 appKey: T1SDu7fxVR6PogZ1TCr8Ou8FlCWGYvWD

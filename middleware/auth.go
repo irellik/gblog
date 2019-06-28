@@ -1,18 +1,17 @@
 package middleware
 
 import (
+	"encoding/base64"
+	"encoding/gob"
 	"encoding/json"
+	sl "gblog/service/local"
+	"gblog/utils"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
+	"net/http"
 	"strconv"
 	"time"
-	"encoding/base64"
-	"github.com/gin-gonic/gin"
-	"github.com/gin-contrib/sessions"
-	sl "gblog/service/local"
-	"gblog/helpers"
-	"net/http"
-	"encoding/gob"
 )
-
 
 func AuthMiddleware(c *gin.Context) {
 	gob.Register(map[string]string{})
@@ -22,39 +21,39 @@ func AuthMiddleware(c *gin.Context) {
 	if user_info == nil {
 		user := make(map[string]string, 0)
 		// get cookie
-		cookieBase64Encode,err := c.Cookie("g_u")
+		cookieBase64Encode, err := c.Cookie("g_u")
 		if err != nil {
-			helpers.Failed(c, http.StatusUnauthorized,err.Error())
+			utils.Failed(c, http.StatusUnauthorized, err.Error(), nil)
 			return
 		}
 		// base64 decode
-		cookieBase64Decode,err := base64.StdEncoding.DecodeString(cookieBase64Encode)
+		cookieBase64Decode, err := base64.StdEncoding.DecodeString(cookieBase64Encode)
 		if err != nil {
-			helpers.Failed(c, http.StatusUnauthorized,err.Error())
+			utils.Failed(c, http.StatusUnauthorized, err.Error(), nil)
 			return
 		}
 		// decrypt cookie
-		cookieByte,err := sl.Decrypt(cookieBase64Decode)
+		cookieByte, err := sl.Decrypt(cookieBase64Decode)
 		if err != nil {
-			helpers.Failed(c, http.StatusUnauthorized,err.Error())
+			utils.Failed(c, http.StatusUnauthorized, err.Error(), nil)
 			return
 		}
 		// json to map
 		err = json.Unmarshal(cookieByte, &user)
-		if err != nil{
-			helpers.Failed(c, http.StatusUnauthorized,err.Error())
+		if err != nil {
+			utils.Failed(c, http.StatusUnauthorized, err.Error(), nil)
 			return
 		}
 		// if cookie is valid,set session
-		expired,_ := strconv.Atoi(user["expired"])
+		expired, _ := strconv.Atoi(user["expired"])
 		if int(time.Now().Unix()) < expired {
 			session.Set("user_info", user)
 			session.Options(sessions.Options{
-				MaxAge:globalConfig.Session.MaxAge,
+				MaxAge: globalConfig.Session.MaxAge,
 			})
 			session.Save()
-		}else{
-			helpers.Failed(c, http.StatusUnauthorized,"unauthorized")
+		} else {
+			utils.Failed(c, http.StatusUnauthorized, "unauthorized", nil)
 			return
 		}
 	}
