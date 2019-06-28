@@ -153,6 +153,24 @@
 			"revisionTime": "2018-08-30T10:17:45Z"
 		},
 		{
+			"checksumSHA1": "GF56Ga3BHcQkhV1hnHENfuks2pk=",
+			"path": "github.com/skip2/go-qrcode",
+			"revision": "dc11ecdae0a9889dc81a343585516404e8dc6ead",
+			"revisionTime": "2019-01-10T00:05:54Z"
+		},
+		{
+			"checksumSHA1": "xkuxp8PnGrQUsIXMiIOCk4U5IGw=",
+			"path": "github.com/skip2/go-qrcode/bitset",
+			"revision": "dc11ecdae0a9889dc81a343585516404e8dc6ead",
+			"revisionTime": "2019-01-10T00:05:54Z"
+		},
+		{
+			"checksumSHA1": "UtPg/z5chOpfiJvr29Or0oUx1Bs=",
+			"path": "github.com/skip2/go-qrcode/reedsolomon",
+			"revision": "dc11ecdae0a9889dc81a343585516404e8dc6ead",
+			"revisionTime": "2019-01-10T00:05:54Z"
+		},
+		{
 			"checksumSHA1": "Ocy7N1bNnMersjQSekHOT9ycVq4=",
 			"path": "github.com/ugorji/go/codec",
 			"revision": "7d13b37dbec67bb708a89efb93c1297ed3b552c6",

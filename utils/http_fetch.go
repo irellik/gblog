@@ -2,14 +2,11 @@ package utils
 
 import (
 	"bytes"
-	"cms2cs1806-go/util"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 type HC struct {
@@ -83,7 +80,6 @@ func (httpClient *HC) HttpDelete(url string, headers map[string]string) ([]byte,
 }
 
 func (httpClient *HC) HttpPost(url string, data interface{}, headers map[string]string) ([]byte, error) {
-	startTime := time.Now()
 	dataMap, okMap := data.(map[string]string)
 	dataJson, okJson := data.(string)
 	var req *http.Request
@@ -102,8 +98,6 @@ func (httpClient *HC) HttpPost(url string, data interface{}, headers map[string]
 		}
 	}
 	response, err := httpClient.Client.Do(req) //提交
-	endTime := time.Now()
-	util.AppendFile("/tmp/http_time.log", fmt.Sprintf("%s\t%s\t%s\t%d\r\n", url, startTime.Format("2006-01-02 15:04:05"), endTime.Format("2006-01-02 15:04:05"), endTime.UnixNano()/1e6-startTime.UnixNano()/1e6))
 	if err != nil {
 		return []byte{}, err
 	}
