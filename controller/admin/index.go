@@ -59,6 +59,11 @@ func Login(c *gin.Context) {
 		utils.Failed(c, http.StatusInternalServerError, err.Error(), nil)
 		return
 	}
+	success := rcMap["success"].(bool)
+	if !success {
+		utils.Failed(c, http.StatusForbidden, "403 Forbidden", nil)
+		return
+	}
 	score := rcMap["score"].(float64)
 	if score < config.Recaptcha.Score {
 		utils.Failed(c, http.StatusForbidden, "403 Forbidden", nil)
@@ -73,6 +78,7 @@ func Login(c *gin.Context) {
 	userDB, err := model.Auth(lf.Username, lf.Password, lf.AuthenticatorCode, utils.InetAton(c.ClientIP()))
 	if err != nil {
 		msg := err.Error()
+		// 还未绑定
 		if err == model.UserNotBindSecretError {
 			otpConf := &local.OTPConfig{
 				Secret: userDB.Secret,
