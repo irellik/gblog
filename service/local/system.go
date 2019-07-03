@@ -32,6 +32,7 @@ type Config struct {
 		Address      string `yaml:"address"`
 		RememberDays int    `yaml:"remember_days"`
 		Domain       string `yaml:"domain"`
+		UploadPath   string `yaml:"uploadPath"`
 	} `yaml:"site"`
 	Recaptcha struct {
 		Secret string  `yaml:"secret"`

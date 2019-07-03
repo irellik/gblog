@@ -37,7 +37,7 @@ func Auth(username string, password string, authenticatorCode string, clientIp i
 	if err != nil {
 		return user, err
 	}
-	// 如果绑定先检查是否匹配
+	// 先检查是否匹配
 	otpConf := &sl.OTPConfig{
 		Secret: user.Secret,
 	}

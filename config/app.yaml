@@ -9,9 +9,10 @@ site:
   address: :8000
   remember_days: 30
   domain: blog.iwww.me
+  uploadPath: /Users/wangweiwei/Downloads/uploads
 session:
   maxAge: 3600
 recaptcha:
   secret: xxx
-  score: 0.5
+  score: 0.9
 appKey: T1SDu7fxVR6PogZ1TCr8Ou8FlCWGYvWD

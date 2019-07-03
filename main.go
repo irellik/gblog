@@ -77,6 +77,7 @@ func main() {
 		router_admin.GET("/", admin.Index)
 		router_admin.GET("/category", admin.CategoryList)
 		router_admin.POST("/article", admin.ArticleStore)
+		router_admin.POST("/upload", admin.UploadImage)
 		router_admin.DELETE("/article", admin.ArticleDelete)
 		router_admin.GET("/article", admin.ArticleList)
 		router_admin.GET("/article/:id", admin.ArticleDetail)

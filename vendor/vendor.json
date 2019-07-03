@@ -3,6 +3,54 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "lM/E+PBoaqN7rA2oROJjjSeg5t8=",
+			"path": "gblog",
+			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
+			"revisionTime": "2018-11-24T07:21:39Z"
+		},
+		{
+			"checksumSHA1": "hTo7ZXR92C26+e+4Nlr8frGuXF0=",
+			"path": "gblog/controller",
+			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
+			"revisionTime": "2018-11-24T07:21:39Z"
+		},
+		{
+			"checksumSHA1": "VB42rN0UWH82FYO0wAFkOKclXyA=",
+			"path": "gblog/controller/admin",
+			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
+			"revisionTime": "2018-11-24T07:21:39Z"
+		},
+		{
+			"checksumSHA1": "I4bMp/b85PRhhBPlFb0CL0zfGGU=",
+			"path": "gblog/helpers",
+			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
+			"revisionTime": "2018-11-24T07:21:39Z"
+		},
+		{
+			"checksumSHA1": "0CUz10Hja7LvomiO+qkq7/kJpF4=",
+			"path": "gblog/model",
+			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
+			"revisionTime": "2018-11-24T07:21:39Z"
+		},
+		{
+			"checksumSHA1": "duimFbkjcFDB3D0fuOWqm1pDRVI=",
+			"path": "gblog/service",
+			"revision": "6ade815f79ffe0611ccff67754a6e0abd08ccb60",
+			"revisionTime": "2018-09-07T02:23:18Z"
+		},
+		{
+			"checksumSHA1": "6QehjtPcZAy7vqfC3G3XSvq38uE=",
+			"path": "gblog/service/local",
+			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
+			"revisionTime": "2018-11-24T07:21:39Z"
+		},
+		{
+			"checksumSHA1": "UGiB6HgonzIFUMvY7VQlZWMWqRY=",
+			"path": "gblog/service/third",
+			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
+			"revisionTime": "2018-11-24T07:21:39Z"
+		},
+		{
 			"checksumSHA1": "H5YFYmUpnlLVKNBk+HXH/wYJLw4=",
 			"path": "github.com/gin-contrib/sessions",
 			"revision": "58cbcf30135cc04c55e4499757142265d58e62d6",
@@ -97,54 +145,6 @@
 			"path": "github.com/gorilla/sessions",
 			"revision": "68d1edeb366b66bdd5d714e32d7a065f74b03b9b",
 			"revisionTime": "2018-10-14T08:38:51Z"
-		},
-		{
-			"checksumSHA1": "lM/E+PBoaqN7rA2oROJjjSeg5t8=",
-			"path": "github.com/irellik/gblog",
-			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
-			"revisionTime": "2018-11-24T07:21:39Z"
-		},
-		{
-			"checksumSHA1": "hTo7ZXR92C26+e+4Nlr8frGuXF0=",
-			"path": "github.com/irellik/gblog/controller",
-			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
-			"revisionTime": "2018-11-24T07:21:39Z"
-		},
-		{
-			"checksumSHA1": "VB42rN0UWH82FYO0wAFkOKclXyA=",
-			"path": "github.com/irellik/gblog/controller/admin",
-			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
-			"revisionTime": "2018-11-24T07:21:39Z"
-		},
-		{
-			"checksumSHA1": "I4bMp/b85PRhhBPlFb0CL0zfGGU=",
-			"path": "github.com/irellik/gblog/helpers",
-			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
-			"revisionTime": "2018-11-24T07:21:39Z"
-		},
-		{
-			"checksumSHA1": "0CUz10Hja7LvomiO+qkq7/kJpF4=",
-			"path": "github.com/irellik/gblog/model",
-			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
-			"revisionTime": "2018-11-24T07:21:39Z"
-		},
-		{
-			"checksumSHA1": "duimFbkjcFDB3D0fuOWqm1pDRVI=",
-			"path": "github.com/irellik/gblog/service",
-			"revision": "6ade815f79ffe0611ccff67754a6e0abd08ccb60",
-			"revisionTime": "2018-09-07T02:23:18Z"
-		},
-		{
-			"checksumSHA1": "6QehjtPcZAy7vqfC3G3XSvq38uE=",
-			"path": "github.com/irellik/gblog/service/local",
-			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
-			"revisionTime": "2018-11-24T07:21:39Z"
-		},
-		{
-			"checksumSHA1": "UGiB6HgonzIFUMvY7VQlZWMWqRY=",
-			"path": "github.com/irellik/gblog/service/third",
-			"revision": "fc92440a628b1612c0737356fc5597d3cf80776b",
-			"revisionTime": "2018-11-24T07:21:39Z"
 		},
 		{
 			"checksumSHA1": "GiVgQkx5acnq+JZtYiuHPlhHoso=",
