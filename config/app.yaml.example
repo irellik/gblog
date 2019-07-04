@@ -9,7 +9,7 @@ site:
   address: :8000
   remember_days: 30
   domain: blog.iwww.me
-  uploadPath: /Users/wangweiwei/Downloads/uploads
+  uploadPath: /path/to/upload
 session:
   maxAge: 3600
 recaptcha:

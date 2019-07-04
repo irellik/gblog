@@ -17,3 +17,4 @@
 !/vendor/vendor.json
 gblog
 .DS_Store
+config/app.yaml
