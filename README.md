@@ -13,3 +13,8 @@ go build
 ```
 
 使用Nginx做服务器，反向代理Golang，详情页路由 /1.html使用Nginx rewrite 到 /post/1
+
+## todo
+
+- 使用 gorm 替换原生SQL
+- 支持缓存

@@ -1,9 +1,9 @@
 package admin
 
 import (
-	"gblog/model"
-	"gblog/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/irellik/gblog/model"
+	"github.com/irellik/gblog/utils"
 )
 
 func CategoryList(c *gin.Context) {

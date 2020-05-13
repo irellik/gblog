@@ -2,7 +2,7 @@ package model
 
 import (
 	"fmt"
-	sl "gblog/service/local"
+	sl "github.com/irellik/gblog/service/local"
 )
 
 // 栏目
@@ -15,7 +15,7 @@ type Category struct {
 }
 
 // 获取所有栏目
-func GetCategories() []Category{
+func GetCategories() []Category {
 	category := Category{}
 	categories := make([]Category, 0)
 	db := sl.MysqlClient

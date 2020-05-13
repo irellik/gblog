@@ -1,10 +1,10 @@
 package controller
 
 import (
-	"gblog/model"
-	sl "gblog/service/local"
-	"gblog/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/irellik/gblog/model"
+	sl "github.com/irellik/gblog/service/local"
+	"github.com/irellik/gblog/utils"
 	"net/http"
 )
 

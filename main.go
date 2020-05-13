@@ -3,16 +3,16 @@ package main
 import (
 	"flag"
 	"fmt"
-	"gblog/controller"
-	"gblog/controller/admin"
-	admin2 "gblog/controller/admin"
-	"gblog/middleware"
-	"gblog/model"
-	sl "gblog/service/local"
-	"gblog/utils"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
+	"github.com/irellik/gblog/controller"
+	"github.com/irellik/gblog/controller/admin"
+	admin2 "github.com/irellik/gblog/controller/admin"
+	"github.com/irellik/gblog/middleware"
+	"github.com/irellik/gblog/model"
+	sl "github.com/irellik/gblog/service/local"
+	"github.com/irellik/gblog/utils"
 	"html/template"
 	"os"
 	"path/filepath"
@@ -56,7 +56,7 @@ func main() {
 	router.Use(sessions.Sessions("g_session", store))
 
 	// 静态文件
-	router.Static("/static", "./static")
+	router.Static("/asset", "./static")
 	router.Static("/admin", "./static/html/admin")
 	// 定义模板位置
 	loadView(router)

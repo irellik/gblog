@@ -3,8 +3,8 @@ package model
 import (
 	"database/sql"
 	"fmt"
-	sl "gblog/service/local"
-	"gblog/utils"
+	sl "github.com/irellik/gblog/service/local"
+	"github.com/irellik/gblog/utils"
 	"html/template"
 	"strconv"
 	"strings"

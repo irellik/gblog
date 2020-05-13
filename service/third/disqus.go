@@ -2,8 +2,8 @@ package third
 
 import (
 	"encoding/json"
-	"gblog/model"
-	"gblog/utils"
+	"github.com/irellik/gblog/model"
+	"github.com/irellik/gblog/utils"
 	"regexp"
 	"strconv"
 	"strings"

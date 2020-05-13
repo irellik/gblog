@@ -2,7 +2,7 @@ package model
 
 import (
 	"errors"
-	sl "gblog/service/local"
+	sl "github.com/irellik/gblog/service/local"
 	"golang.org/x/crypto/bcrypt"
 	"time"
 )
